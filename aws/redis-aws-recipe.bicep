@@ -22,7 +22,7 @@ resource subnetGroup 'AWS.MemoryDB/SubnetGroup@default' = {
   properties: {
     SubnetGroupName: subnetGroupName
     SubnetIds: ((empty(subnetIds)) ? eksCluster.properties.ResourcesVpcConfig.SubnetIds : concat(subnetIds,eksCluster.properties.ResourcesVpcConfig.SubnetIds))
-}
+  }
 }
 
 param memoryDBClusterName string = 'awscache-${uniqueString(context.resource.id)}'
