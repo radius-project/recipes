@@ -16,7 +16,7 @@ resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   }
 }
 
-param subnetGroupName string = 'recipe-memorydb-subnet-group'
+param subnetGroupName string = 'subnet-group-memorydb-${uniqueString(context.resource.id)}'
 resource subnetGroup 'AWS.MemoryDB/SubnetGroup@default' = {
   alias:subnetGroupName
   properties: {
@@ -25,7 +25,7 @@ resource subnetGroup 'AWS.MemoryDB/SubnetGroup@default' = {
   }
 }
 
-param memoryDBClusterName string = 'awscache-${uniqueString(context.resource.id)}'
+param memoryDBClusterName string = 'memorydb-${uniqueString(context.resource.id)}'
 resource memoryDBCluster 'AWS.MemoryDB/Cluster@default' = {
   alias: memoryDBClusterName
   properties: {
