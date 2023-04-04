@@ -4,6 +4,7 @@
 # ------------------------------------------------------------
 
 name: Validate Bicep Code
+
 on:
   pull_request:
     branches:
@@ -14,13 +15,17 @@ on:
       - edge
       - v*
 
+concurrency:
+  group: validate-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  validate:
     name: Validate Bicep Code
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: az CLI login
       run: |
         az login --service-principal \
@@ -38,3 +43,8 @@ jobs:
       run: ./.github/scripts/validate-bicep.sh
       env: 
         BICEP_PATH: .
+    - name: Write error to summary
+      if: ${{ failure() }}
+      run: |
+        echo "## Bicep validation failed" >> $GITHUB_STEP_SUMMARY
+        echo "One or more Bicep files have failed validation. Please ensure you do not have any Bicep errors. Visit https://docs.radapp.dev/getting-started/install/ to download and install the Bicep VS Code extension to assist with validation." >> $GITHUB_STEP_SUMMARY
