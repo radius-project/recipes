@@ -1,7 +1,7 @@
 import aws as aws
 
 @description('Radius-provided object containing information about the resouce calling the Recipe')
-param context objec
+param context object
 
 @description('Name of the EKS cluster used for app deployment')
 param eksClusterName string
