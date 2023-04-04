@@ -43,9 +43,11 @@ jobs:
       env: 
         BICEP_PATH: .
       run: |
+        echo "## Recipes published to Dev ACR" >> $GITHUB_STEP_SUMMARY
         for recipe in $(find . -type f -name "*.bicep"); do
           export FILE_NAME=$(basename $recipe | cut -d. -f1)
           export DIR_NAME=$(dirname $recipe | cut -d/ -f2)
           echo "Publishing $FILE_NAME Recipe from $recipe"
+          echo "- radiusdev.azurecr.io/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION" >> $GITHUB_STEP_SUMMARY
           ./rad-bicep publish $recipe --target br:radiusdev.azurecr.io/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION
         done
