@@ -23,6 +23,8 @@ jobs:
   publish-dev:
     name: Publish Recipes to Dev ACR
     runs-on: ubuntu-latest
+    environment: 
+      name: Dev
     steps:
     - name: Check out repo
       uses: actions/checkout@v3
@@ -55,6 +57,7 @@ jobs:
   publish-prod:
     name: Publish Recipes to Prod ACR
     runs-on: ubuntu-latest
+    needs: publish-dev
     if: github.event_name == 'push' && github.ref == 'refs/heads/edge'
     environment: 
       name: Public
