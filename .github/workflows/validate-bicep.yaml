@@ -47,4 +47,4 @@ jobs:
       if: ${{ failure() }}
       run: |
         echo "## Bicep validation failed" >> $GITHUB_STEP_SUMMARY
-        echo "One or more Bicep files have failed validation. Please ensure you do not have any Bicep errors. Refer to ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} for more information. " >> $GITHUB_STEP_SUMMARY
+        echo "One or more Bicep files have failed validation. Please ensure you do not have any Bicep errors. Refer to ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs/${{ github.job_id }}  for more information. " >> $GITHUB_STEP_SUMMARY
