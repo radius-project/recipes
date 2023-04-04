@@ -25,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: Dev
+    env:
+      ACR_HOST: radiusdev.azurecr.io
     steps:
     - name: Check out repo
       uses: actions/checkout@v3
@@ -42,17 +44,7 @@ jobs:
         chmod +x rad-bicep
         ./rad-bicep --version
     - name: Publish Recipes to Dev ACR
-      env: 
-        BICEP_PATH: .
-      run: |
-        echo "## Recipes published to Dev ACR" >> $GITHUB_STEP_SUMMARY
-        for recipe in $(find . -type f -name "*.bicep"); do
-          export FILE_NAME=$(basename $recipe | cut -d. -f1)
-          export DIR_NAME=$(dirname $recipe | cut -d/ -f2)
-          echo "Publishing $FILE_NAME Recipe from $recipe"
-          echo "- radiusdev.azurecr.io/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION" >> $GITHUB_STEP_SUMMARY
-          ./rad-bicep publish $recipe --target br:radiusdev.azurecr.io/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION
-        done
+      run: ./.github/scripts/publish-recipes.sh
 
   publish-prod:
     name: Publish Recipes to Prod ACR
@@ -61,6 +53,8 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/edge'
     environment: 
       name: Public
+    env:
+      ACR_HOST: radiusdev.azurecr.io
     steps:
     - name: Check out repo
       uses: actions/checkout@v3
@@ -78,14 +72,4 @@ jobs:
         chmod +x rad-bicep
         ./rad-bicep --version
     - name: Publish Recipes to Prod ACR
-      env: 
-        BICEP_PATH: .
-      run: |
-        echo "## Recipes published to Prod ACR" >> $GITHUB_STEP_SUMMARY
-        for recipe in $(find . -type f -name "*.bicep"); do
-          export FILE_NAME=$(basename $recipe | cut -d. -f1)
-          export DIR_NAME=$(dirname $recipe | cut -d/ -f2)
-          echo "Publishing $FILE_NAME Recipe from $recipe"
-          echo "- radiusdev.azurecr.io/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION" >> $GITHUB_STEP_SUMMARY
-          ./rad-bicep publish $recipe --target br:radiusdev.azurecr.io/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION
-        done
+      run: ./.github/scripts/publish-recipes.sh
