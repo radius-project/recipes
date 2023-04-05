@@ -8,5 +8,5 @@ do
     export DIR_NAME=$(dirname $RECIPE | cut -d/ -f2)
     echo "Publishing $FILE_NAME Recipe from $RECIPE"
     echo "- `$ACR_HOST/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION`" >> $GITHUB_STEP_SUMMARY
-    ./rad-bicep publish $RECIPE --target br:$ACR_HOST/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION
+    ../../rad-bicep publish $RECIPE --target br:$ACR_HOST/recipes/$DIR_NAME/$FILE_NAME:$REL_VERSION
 done
