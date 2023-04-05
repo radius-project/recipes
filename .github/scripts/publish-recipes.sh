@@ -34,7 +34,7 @@ do
     export FILE_NAME=$(basename $RECIPE | cut -d. -f1)
     export DIR_NAME=$(dirname $RECIPE | cut -d/ -f2)
 
-    echo "Publishing $FILE_NAME Recipe from $RECIPE"
+    echo "Publishing $DIR_NAME/$FILE_NAME to $ACR_HOST from $RECIPE"
     echo "- $ACR_HOST/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION" >> $GITHUB_STEP_SUMMARY
     $BICEP_EXECUTABLE publish $RECIPE --target "br:$ACR_HOST/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION"
 done
