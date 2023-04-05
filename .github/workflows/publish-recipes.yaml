@@ -50,9 +50,8 @@ jobs:
   delete-dev:
     name: Delete Dev ACR Images
     runs-on: ubuntu-latest
-    # Temporarily testing deletion
     needs: publish-dev
-    #if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     env:
       ACR_HOST: radiusdev.azurecr.io
     steps:
