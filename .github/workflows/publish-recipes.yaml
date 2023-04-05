@@ -46,6 +46,25 @@ jobs:
         BICEP_PATH: .
       run: ./.github/scripts/publish-recipes.sh
 
+  delete-dev:
+    name: Delete Dev ACR Images
+    runs-on: ubuntu-latest
+    # Temporarily testing deletion
+    #if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    env:
+      ACR_HOST: radiusdev.azurecr.io
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v3
+    - name: az CLI login
+      run: |
+        az login --service-principal \
+          --username ${{ secrets.AZURE_SP_TESTS_APPID }} \
+          --password ${{ secrets.AZURE_SP_TESTS_PASSWORD }} \
+          --tenant ${{ secrets.AZURE_SP_TESTS_TENANTID }}
+    - name: Delete Dev ACR Images
+      run: ./.github/scripts/delete-recipes.sh
+
   # This is where we can add integration tests in the future
 
   publish-public:
