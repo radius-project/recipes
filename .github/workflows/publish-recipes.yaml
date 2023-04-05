@@ -40,12 +40,9 @@ jobs:
         ./.github/scripts/curl-with-retries.sh https://get.radapp.dev/tools/bicep-extensibility/${{ env.REL_CHANNEL }}/linux-x64/rad-bicep --output rad-bicep
         chmod +x rad-bicep
         ./rad-bicep --version
-    - name: Publish Recipes to Dev ACR
-      env: 
-        BICEP_PATH: .
-        # Uses REL_VERSION as the recipe version so PR builds result in a `pr-<pr number>` tag
-        RECIPE_VERSION: ${{ env.REL_VERSION }}
-      run: ./.github/scripts/publish-recipes.sh
+    - name: Publish Recipes to Dev ACRs
+      # Uses REL_VERSION as the recipe version so PR builds result in a `pr-<pr number>` tag
+      run: ./.github/scripts/publish-recipes.sh . radiusdev.azurecr.io ${{ env.REL_VERSION }}
 
   delete-dev:
     name: Delete Dev ACR Images
@@ -66,9 +63,7 @@ jobs:
     - name: Parse release version and set environment variables
       run: python ./.github/scripts/get_release_version.py
     - name: Delete Dev ACR Images
-      env:
-        RECIPE_VERSION: ${{ env.REL_VERSION }}
-      run: ./.github/scripts/delete-recipes.sh
+      run: ./.github/scripts/delete-recipes.sh radiusdev.azurecr.io ${{ env.REL_VERSION }}
 
   # This is where we can add integration tests in the future
 
@@ -98,7 +93,4 @@ jobs:
         chmod +x rad-bicep
         ./rad-bicep --version
     - name: Publish Recipes to Prod ACR
-      env: 
-        BICEP_PATH: .
-        RECIPE_VERSION: 1.0
-      run: ./.github/scripts/publish-recipes.sh
+      run: ./.github/scripts/publish-recipes.sh . radius.azurecr.io 1.0
