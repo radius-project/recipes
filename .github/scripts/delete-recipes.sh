@@ -9,7 +9,7 @@ RECIPE_VERSION=$2
 
 # Print usage information
 function print_usage() {
-    echo "Usage: $0 <ACR_HOST>"
+    echo "Usage: $0 <ACR_HOST> <RECIPE_VERSION>"
     echo "  Deletes all recipes in the repository from the Azure Container Registry. Requires you to be logged into Azure via az login."
     echo "  ACR_HOST: Host name of the Azure Container Registry. For example, myregistry.azurecr.io."
     echo "  RECIPE_VERSION: Version of the recipe to publish. For example, 1.0"

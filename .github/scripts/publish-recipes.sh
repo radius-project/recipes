@@ -12,7 +12,7 @@ BICEP_EXECUTABLE="$BICEP_PATH/rad-bicep"
 
 # Print usage information
 function print_usage() {
-    echo "Usage: $0 <BICEP_PATH> <ACR_HOST>"
+    echo "Usage: $0 <BICEP_PATH> <ACR_HOST> <RECIPE_VERSION>"
     echo "  Publishes all recipes in the repository to the Azure Container Registry. Requires you to be logged into Azure via az login."
     echo "  BICEP_PATH: Path to the bicep executable. For example, ~/.rad/bin"
     echo "  ACR_HOST: Host name of the Azure Container Registry. For example, myregistry.azurecr.io."
