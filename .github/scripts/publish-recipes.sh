@@ -9,8 +9,8 @@ fi
 echo "## Recipes published to $ACR_HOST" >> $GITHUB_STEP_SUMMARY
 for RECIPE in $(find . -type f -name "*.bicep")
 do
-    # Get the recipe name and directory name
-    # ./azure/redis-azure.bicep -> redis-azure and azure, respectively
+    # Get the platform (file) name and resource (directory) name
+    # ./rediscaches/aws.bicep -> aws and rediscaches, respectively
     export FILE_NAME=$(basename $RECIPE | cut -d. -f1)
     export DIR_NAME=$(dirname $RECIPE | cut -d/ -f2)
 
