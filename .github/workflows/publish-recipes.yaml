@@ -23,8 +23,6 @@ jobs:
   publish-dev:
     name: Publish Recipes to Dev ACR
     runs-on: ubuntu-latest
-    environment: 
-      name: Dev
     env:
       ACR_HOST: radiusdev.azurecr.io
     steps:
