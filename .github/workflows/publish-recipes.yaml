@@ -23,6 +23,7 @@ jobs:
   publish-dev:
     name: Publish Recipes to Dev ACR
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
     env:
       ACR_HOST: radiusdev.azurecr.io
     steps:
@@ -50,6 +51,7 @@ jobs:
     name: Delete Dev ACR Images
     runs-on: ubuntu-latest
     # Temporarily testing deletion
+    needs: publish-dev
     #if: github.event_name == 'pull_request' && github.event.action == 'closed'
     env:
       ACR_HOST: radiusdev.azurecr.io
