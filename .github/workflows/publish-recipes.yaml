@@ -45,6 +45,7 @@ jobs:
     - name: Publish Recipes to Dev ACR
       env: 
         BICEP_PATH: .
+        RECIPE_VERSION: ${{ env.REL_VERSION }}
       run: ./.github/scripts/publish-recipes.sh
 
   delete-dev:
@@ -63,7 +64,11 @@ jobs:
           --username ${{ secrets.AZURE_SP_TESTS_APPID }} \
           --password ${{ secrets.AZURE_SP_TESTS_PASSWORD }} \
           --tenant ${{ secrets.AZURE_SP_TESTS_TENANTID }}
+    - name: Parse release version and set environment variables
+      run: python ./.github/scripts/get_release_version.py
     - name: Delete Dev ACR Images
+      env:
+        RECIPE_VERSION: ${{ env.REL_VERSION }}
       run: ./.github/scripts/delete-recipes.sh
 
   # This is where we can add integration tests in the future
@@ -96,4 +101,5 @@ jobs:
     - name: Publish Recipes to Prod ACR
       env: 
         BICEP_PATH: .
+        RECIPE_VERSION: 1.0
       run: ./.github/scripts/publish-recipes.sh
