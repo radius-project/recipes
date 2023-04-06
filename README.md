@@ -1,2 +1,3 @@
-# recipes
+# Recipes
+
 Community Recipes
