@@ -60,6 +60,13 @@ resource svc 'core/Service@v1' = {
 }
 
 output result object = {
+  // This workaround is needed because the deployment engine omits Kubernetes resources from its output.
+  // This allows Kubernetes resources to be cleaned up when the resource is deleted.
+  // Once this gap is addressed, users won't need to do this.
+  resources: [
+    '/planes/kubernetes/local/namespaces/${svc.metadata.namespace}/providers/core/Service/${svc.metadata.name}'
+    '/planes/kubernetes/local/namespaces/${redis.metadata.namespace}/providers/apps/Deployment/${redis.metadata.name}'
+  ]
   values: {
     host: '${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local'
     port: 6379
