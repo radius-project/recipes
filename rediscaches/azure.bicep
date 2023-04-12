@@ -43,7 +43,7 @@ output result object = {
     port: azureCache.properties.port
   }
   secrets: {
-    connectionString: 'redis://${redis.properties.hostName}:${redis.properties.port}'
+    connectionString: 'redis://${azureCache.properties.hostName}:${azureCache.properties.port}'
 
     #disable-next-line outputs-should-not-contain-secrets
     password: azureCache.listKeys().primaryKey
