@@ -38,13 +38,13 @@ resource azureCache 'Microsoft.Cache/redis@2022-06-01' = {
 }
 
 output result object = {
-    values: {
-      host: azureCache.properties.hostName
-      port: azureCache.properties.port
-    }
-    secrets: {
-      connectionString: 'redis://${azureCache.properties.hostName}:${azureCache.properties.port}'
-      #disable-next-line outputs-should-not-contain-secrets
-      password: azureCache.listKeys().primaryKey
-    }
+  values: {
+    host: azureCache.properties.hostName
+    port: azureCache.properties.port
+    username: ''
+  }
+  secrets: {
+    #disable-next-line outputs-should-not-contain-secrets
+    password: azureCache.listKeys().primaryKey
+  }
 }
