@@ -44,6 +44,7 @@ output result object = {
     username: ''
   }
   secrets: {
+    
     #disable-next-line outputs-should-not-contain-secrets
     password: azureCache.listKeys().primaryKey
   }
