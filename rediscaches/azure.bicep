@@ -44,9 +44,7 @@ output result object = {
     username: ''
   }
   secrets: {
-    #disable-next-line outputs-should-not-contain-secrets
-    connectionString: '${azureCache.listKeys().primaryKey}@${azureCache.properties.hostName}?ssl=true'
-
+    
     #disable-next-line outputs-should-not-contain-secrets
     password: azureCache.listKeys().primaryKey
   }
