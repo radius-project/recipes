@@ -26,7 +26,7 @@ param name string = 'Basic'
 
 resource azureCache 'Microsoft.Cache/redis@2022-06-01' = {
   // Ensure the resource name is unique and repeatable
-  name: 'cache-${uniqueString(context.resource.id)}'
+  name: 'cache-${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
   properties: {
     sku: {
