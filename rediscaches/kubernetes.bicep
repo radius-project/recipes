@@ -22,17 +22,32 @@ resource redis 'apps/Deployment@v1' = {
         labels: {
           app: 'redis'
           resource: context.resource.name
+
+          // Label pods with the application name so `rad run` can find the logs.
+          'radius.dev/application': context.application == null ? '' : context.application.name
         }
       }
       spec: {
         containers: [
           {
+            // This container is the running redis instance.
             name: 'redis'
             image: 'redis'
             ports: [
               {
                 containerPort: 6379
               }
+            ]
+          }
+          {
+            // This container will connect to redis and stream logs to stdout for aid in development.
+            name: 'redis-monitor'
+            image: 'redis'
+            args: [
+              'redis-cli'
+              '-h'
+              'localhost'
+              'MONITOR'
             ]
           }
         ]
