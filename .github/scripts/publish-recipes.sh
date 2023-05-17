@@ -30,9 +30,9 @@ echo "## Recipes published to $ACR_HOST" >> $GITHUB_STEP_SUMMARY
 for RECIPE in $(find . -type f -name "*.bicep")
 do
     # Get the platform (file) name and resource (directory) name
-    # ./rediscaches/aws.bicep -> aws and rediscaches, respectively
-    export FILE_NAME=$(basename $RECIPE | cut -d. -f1)
-    export DIR_NAME=$(dirname $RECIPE | cut -d/ -f2)
+    # ./dev/rediscaches.bicep -> aws and rediscaches, respectively
+    export FILE_NAME=$(basename $RECIPE | cut -d. -f1) # rediscaches
+    export DIR_NAME=$(dirname $RECIPE | cut -d/ -f2)   # dev
 
     echo "Publishing $DIR_NAME/$FILE_NAME to $ACR_HOST from $RECIPE"
     echo "- $ACR_HOST/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION" >> $GITHUB_STEP_SUMMARY
