@@ -30,7 +30,6 @@ echo "## Recipes published to $ACR_HOST" >> $GITHUB_STEP_SUMMARY
 for RECIPE in $(find . -type f -name "*.bicep")
 do
     # Get the platform (file) name and resource (directory) name
-    # ./dev/rediscaches.bicep -> dev and rediscaches, respectively
     export FILE_NAME=$(basename $RECIPE | cut -d. -f1) # rediscaches
     export DIR_NAME=$(dirname $RECIPE | cut -d/ -f2)   # dev
 
