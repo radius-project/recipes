@@ -92,4 +92,4 @@ jobs:
         chmod +x rad-bicep
         ./rad-bicep --version
     - name: Publish Recipes to Prod ACR
-      run: ./.github/scripts/publish-recipes.sh . radius.azurecr.io 1.0
+      run: ./.github/scripts/publish-recipes.sh . radius.azurecr.io ${{ env.REL_VERSION }}
