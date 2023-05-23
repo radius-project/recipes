@@ -54,6 +54,10 @@ with open(os.getenv("GITHUB_ENV"), "a") as githubEnv:
         print("Setting: {}".format(channel))
         githubEnv.write(channel + "\n")
 
+        tag = "REL_TAG=local"
+        print("Setting: {}".format(tag))
+        githubEnv.write(tag + "\n")
+
         sys.exit(0)
 
     match = re.search(pullRefRegex, gitRef)
@@ -67,6 +71,10 @@ with open(os.getenv("GITHUB_ENV"), "a") as githubEnv:
         channel = "REL_CHANNEL=edge"
         print("Setting: {}".format(channel))
         githubEnv.write(channel + "\n")
+
+        tag = "REL_TAG=pr-{}".format(match.group(1))
+        print("Setting: {}".format(tag))
+        githubEnv.write(tag + "\n")
 
         sys.exit(0)
 
@@ -85,8 +93,13 @@ with open(os.getenv("GITHUB_ENV"), "a") as githubEnv:
             print("Setting: {}".format(channel))
             githubEnv.write(channel + "\n")
 
+            tag = "REL_TAG={}".format(match.group("version"))
+            print("Setting: {}".format(tag))
+            githubEnv.write(tag + "\n")
+
             print("Setting: UPDATE_RELEASE=true")
             githubEnv.write("UPDATE_RELEASE=true" + "\n")
+
             sys.exit(0)
 
         else:
@@ -99,6 +112,11 @@ with open(os.getenv("GITHUB_ENV"), "a") as githubEnv:
             channel = "REL_CHANNEL={}".format(match.group("version"))
             print("Setting: {}".format(channel))
             githubEnv.write(channel + "\n")
+
+            tag = "REL_TAG={}".format(match.group("version"))
+            print("Setting: {}".format(tag))
+            githubEnv.write(tag + "\n")
+
             sys.exit(0)
 
     print("This is a normal build")
@@ -109,3 +127,8 @@ with open(os.getenv("GITHUB_ENV"), "a") as githubEnv:
     channel = "REL_CHANNEL=edge"
     print("Setting: {}".format(channel))
     githubEnv.write(channel + "\n")
+
+    tag = "REL_TAG=latest"
+    print("Setting: {}".format(tag))
+    githubEnv.write(tag + "\n")
+    
