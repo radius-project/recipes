@@ -83,7 +83,7 @@ jobs:
   publish-public:
     name: Publish Recipes to Public ACR
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request'
     environment: 
       name: Public
     env:
