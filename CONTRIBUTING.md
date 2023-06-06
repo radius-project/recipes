@@ -37,7 +37,8 @@ Before you file an issue, make sure you've checked the following:
     - You have as much data as possible. This usually comes in the form of logs and/or stacktrace. If running on Kubernetes or other environment, look at the logs of the Radius services (UCP, RP, DE). More details on how to get logs can be found [here](https://docs.radapp.dev/reference/troubleshooting-radius/).
 1. For proposals
     - Many changes to the Radius runtime may require changes to the API. In that case, the best place to discuss the potential feature is the main [Radius repo](https://github.com/project-radius/radius).
-    - Other examples could include bindings, state stores or entirely new components.
+    - Recipes runtime changes can be discussed in the [Radius repo](https://github.com/project-radius/radius).
+    - Community Recipes can be discussed here.
 
 ## Contributing to Radius Recipes
 
@@ -61,7 +62,3 @@ All contributions come through pull requests. To submit a proposed change, we re
 A good way to communicate before investing too much time is to create a draft PR and share it with your reviewers. The standard way of doing this is to mark your PR as draft within GitHub.
 
 **Thank You!** - Your contributions to open source, large or small, make projects like this possible. Thank you for taking the time to contribute.
-
-## Code of Conduct
-
-This project has adopted the [Contributor Covenant Code of Conduct](https://github.com/project-radius/radius/blob/main/CODE-OF-CONDUCT.md)
