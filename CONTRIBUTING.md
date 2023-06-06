@@ -60,7 +60,6 @@ All contributions come through pull requests. To submit a proposed change, we re
 
 A good way to communicate before investing too much time is to create a draft PR and share it with your reviewers. The standard way of doing this is to mark your PR as draft within GitHub.
 
-
 **Thank You!** - Your contributions to open source, large or small, make projects like this possible. Thank you for taking the time to contribute.
 
 ## Code of Conduct
