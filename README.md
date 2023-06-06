@@ -14,7 +14,7 @@ The [dev](/dev) directory contains lightweight Recipes for development purposes.
 
 | Recipe | Description | Template Path |
 |--------|-------------|---------------|
-| [`dev/rediscaches`](/dev/rediscaches.bicep) | A lightweight container running the `redis` image for development purposes. | `https://radius.azurecr.io/recipes/dev/rediscaches:0.21` |
+| [`dev/rediscaches`](/dev/rediscaches.bicep) | A lightweight container running the `redis` image for development purposes. | `radius.azurecr.io/recipes/dev/rediscaches:TAG` |
 
 ### azure
 
@@ -22,7 +22,7 @@ The [azure](/azure) directory contains Recipes for Azure resources. They are con
 
 | Recipe | Description | Template Path |
 |--------|-------------|---------------|
-| [`azure/rediscaches`](/azure/rediscaches.bicep) | An Azure Cache for Redis resource with a configurable size and SKU. | `https://radius.azurecr.io/recipes/azure/rediscaches:0.21` |
+| [`azure/rediscaches`](/azure/rediscaches.bicep) | An Azure Cache for Redis resource with a configurable size and SKU. | `radius.azurecr.io/recipes/azure/rediscaches:TAG` |
 
 ### aws
 
@@ -30,7 +30,15 @@ The [aws](/aws) directory contains Recipes for AWS resources. They are configura
 
 | Recipe | Description | Template Path |
 |--------|-------------|---------------|
-| [`aws/rediscaches`](/aws/rediscaches.bicep) | An AWS MemoryDB resource with a configurable size and SKU. | `https://radius.azurecr.io/recipes/aws/rediscaches:0.21` |
+| [`aws/rediscaches`](/aws/rediscaches.bicep) | An AWS MemoryDB resource with a configurable size and SKU. | `radius.azurecr.io/recipes/aws/rediscaches:TAG` |
+
+## Versioning and Tags
+
+Recipes are versioned using [semantic versioning](https://semver.org/). Each Recipe is tagged with its version number, and the `latest` tag points to the latest version of each Recipe. For example, Radius v0.21 uses the `0.21` tag for each Recipe:
+
+```
+radius.azurecr.io/recipes/azure/rediscaches:0.21`
+```
 
 ## Usage
 
@@ -42,7 +50,7 @@ To use a community recipe from this repo, simply use [`rad recipe register`](htt
 rad recipe register azure \
   --environment myenv \
   --template-kind bicep \ 
-  --template-path "https://radius.azurecr.io/recipes/azure/rediscaches:0.21" \
+  --template-path "radius.azurecr.io/recipes/azure/rediscaches:TAG" \
   --resource-type "Applications.Link/redisCaches"
 ```
 
@@ -59,7 +67,7 @@ resource myenv 'Applications.Core/environments' = {
       'Applications.Core/redisCaches': {
         'azure': {
           template-kind: 'bicep'
-          template-path: 'https://radius.azurecr.io/recipes/azure/rediscaches:0.21'
+          template-path: 'radius.azurecr.io/recipes/azure/rediscaches:0.21'
         }
       }
     }
