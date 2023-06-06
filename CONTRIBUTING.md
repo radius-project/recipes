@@ -16,10 +16,10 @@ This section describes the guidelines for submitting issues
 
 There are 4 types of issues:
 
-- bug: You've found a bug with the code, and want to report it, or create an issue to track the bug.
+- bug: You've found a bug with the code and want to report it or create an issue to track the bug.
 - discussion: You have something on your mind, which requires input form others in a discussion, before it eventually manifests as a proposal.
 - proposal: Used for items that propose a new idea or functionality. This allows feedback from others before code is written.
-- question: Use this issue type, if you need help or have a question.
+- question: Use this issue type if you need help or have a question.
 
 ### Before You File
 
@@ -34,7 +34,7 @@ Before you file an issue, make sure you've checked the following:
         - 👎 down-vote
 1. For bugs
     - Check it's not an environment issue. For example, if running on Kubernetes, make sure prerequisites are in place.
-    - You have as much data as possible. This usually comes in the form of logs and/or stacktrace. If running on Kubernetes or other environment, look at the logs of the Radius services (UCP, RP, DE). More details on how to get logs can be found [here](https://docs.radapp.dev/reference/troubleshooting-radius/).
+    - Ensure you have as much data as possible. This usually comes in the form of logs and/or stacktrace. If running on Kubernetes or other environment, look at the logs of the Radius services (UCP, RP, DE). More details on how to get logs can be found [here](https://docs.radapp.dev/reference/troubleshooting-radius/).
 1. For proposals
     - Many changes to the Radius runtime may require changes to the API. In that case, the best place to discuss the potential feature is the main [Radius repo](https://github.com/project-radius/radius).
     - Recipes runtime changes can be discussed in the [Radius repo](https://github.com/project-radius/radius).
