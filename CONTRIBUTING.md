@@ -38,7 +38,7 @@ Before you file an issue, make sure you've checked the following:
 1. For proposals
     - Many changes to the Radius runtime may require changes to the API. In that case, the best place to discuss the potential feature is the main [Radius repo](https://github.com/project-radius/radius).
     - Recipes runtime changes can be discussed in the [Radius repo](https://github.com/project-radius/radius).
-    - Community Recipes can be discussed here.
+    - Community Recipes can be discussed within [this repo](https://github.com/project-radius/recipes/issues).
 
 ## Contributing to Radius Recipes
 
