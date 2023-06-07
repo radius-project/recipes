@@ -84,3 +84,7 @@ For more information on using Recipes refer to the [Radius docs](https://docs.ra
 ## Contributing
 
 We welcome contributions to this repo! Please see our [contributing guide](/CONTRIBUTING.md) for more information.
+
+## Code of Conduct
+
+Please refer to our [Radius Community Code of Conduct](https://github.com/project-radius/radius/blob/main/CODE_OF_CONDUCT.md)
