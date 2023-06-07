@@ -79,6 +79,8 @@ resource myenv 'Applications.Core/environments' = {
 }
 ```
 
+For more information on using Recipes refer to the [Radius docs](https://docs.radapp.dev/author-apps/recipes).
+
 ## Contributing
 
 We welcome contributions to this repo! Please see our [contributing guide](/CONTRIBUTING.md) for more information.
