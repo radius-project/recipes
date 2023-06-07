@@ -14,12 +14,12 @@ This section describes the guidelines for submitting issues
 
 ### Issue Types
 
-There are 4 types of issues:
+There are 2 types of issues:
 
 - bug: You've found a bug with the code, and want to report it, or create an issue to track the bug.
-- discussion: You have something on your mind, which requires input form others in a discussion, before it eventually manifests as a proposal.
-- proposal: Used for items that propose a new idea or functionality. This allows feedback from others before code is written.
-- question: Use this issue type, if you need help or have a question.
+- feature: Used for items that propose a new idea or functionality. This allows feedback from others before code is written.
+
+> For questions or feedback please refer to the [Radius Community docs](https://docs.radapp.dev/community/). Discord will be the best way to get in touch with the community and the maintainers.
 
 ### Before You File
 
@@ -35,7 +35,7 @@ Before you file an issue, make sure you've checked the following:
 1. For bugs
     - Check it's not an environment issue. For example, if running on Kubernetes, make sure prerequisites are in place.
     - You have as much data as possible. This usually comes in the form of logs and/or stacktrace. If running on Kubernetes or other environment, look at the logs of the Radius services (UCP, RP, DE). More details on how to get logs can be found [here](https://docs.radapp.dev/reference/troubleshooting-radius/).
-1. For proposals
+1. For features
     - Many changes to the Radius runtime may require changes to the API. In that case, the best place to discuss the potential feature is the main [Radius repo](https://github.com/project-radius/radius).
     - Recipes runtime changes can be discussed in the [Radius repo](https://github.com/project-radius/radius).
     - Community Recipes can be discussed here.
@@ -44,14 +44,17 @@ Before you file an issue, make sure you've checked the following:
 
 This section describes the guidelines for contributing code / docs to Radius Recipes.
 
+### Prerequisites
+
+Make sure you are familiar with how to author and test Recipes. The [custom Recipes docs](https://docs.radapp.dev/operations/custom-recipes/) will walk you through the process. Make sure to test with your own registry and environment before submitting a PR.
+
 ### Pull Requests
 
 All contributions come through pull requests. To submit a proposed change, we recommend following this workflow:
 
-1. Make sure there's an issue (bug or proposal) raised, which sets the expectations for the contribution you are about to make.
+1. Make sure there's an issue (bug or feature) raised, which sets the expectations for the contribution you are about to make.
 1. Fork the relevant repo and create a new branch
 1. Create your change
-    - Code changes require tests
 1. Update relevant documentation for the change
 1. Commit and open a PR
 1. Wait for the CI process to finish and make sure all checks are green
@@ -61,4 +64,6 @@ All contributions come through pull requests. To submit a proposed change, we re
 
 A good way to communicate before investing too much time is to create a draft PR and share it with your reviewers. The standard way of doing this is to mark your PR as draft within GitHub.
 
-**Thank You!** - Your contributions to open source, large or small, make projects like this possible. Thank you for taking the time to contribute.
+## Thank You!
+
+Your contributions to open source, large or small, make projects like this possible. Thank you for taking the time to contribute.
