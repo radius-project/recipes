@@ -34,11 +34,11 @@ Before you file an issue, make sure you've checked the following:
         - 👎 down-vote
 1. For bugs
     - Check it's not an environment issue. For example, if running on Kubernetes, make sure prerequisites are in place.
-    - You have as much data as possible. This usually comes in the form of logs and/or stacktrace. If running on Kubernetes or other environment, look at the logs of the Radius services (UCP, RP, DE). More details on how to get logs can be found [here](https://docs.radapp.dev/reference/troubleshooting-radius/).
-1. For features
+    - Ensure you have as much data as possible. This usually comes in the form of logs and/or stacktrace. If running on Kubernetes or other environment, look at the logs of the Radius services (UCP, RP, DE). More details on how to get logs can be found [here](https://docs.radapp.dev/reference/troubleshooting-radius/).
+1. For proposals
     - Many changes to the Radius runtime may require changes to the API. In that case, the best place to discuss the potential feature is the main [Radius repo](https://github.com/project-radius/radius).
     - Recipes runtime changes can be discussed in the [Radius repo](https://github.com/project-radius/radius).
-    - Community Recipes can be discussed here.
+    - Community Recipes can be discussed within [this repo](https://github.com/project-radius/recipes/issues).
 
 ## Contributing to Radius Recipes
 
