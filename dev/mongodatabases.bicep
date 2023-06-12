@@ -97,6 +97,7 @@ output result object = {
     host: '${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local'
     port: port
     username: username
+    database: ''
   }
   secrets: {
     // Temporarily workaround until secure outputs are added
