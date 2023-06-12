@@ -33,13 +33,15 @@ resource mongo 'apps/Deployment@v1' = {
         labels: {
           app: 'mongo'
           resource: context.resource.name
+          // Label pods with the application name so `rad run` can find the logs.
+          'radius.dev/application': context.application == null ? '' : context.application.name
         }
       }
       spec: {
         containers: [
           {
             name: 'mongo'
-            image: 'mongo:4.2'
+            image: 'mongo:6.0'
             ports: [
               {
                 containerPort: port
