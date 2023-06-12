@@ -97,7 +97,7 @@ output result object = {
   secrets: {
     // Temporarily workaround until secure outputs are added
     #disable-next-line outputs-should-not-contain-secrets
-    connectionString: 'mongodb://${username}:${password}@${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local:27017'
+    connectionString: 'mongodb://${username}:${password}@${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local:${port}'
     username: username
     #disable-next-line outputs-should-not-contain-secrets
     password: password
