@@ -96,12 +96,12 @@ output result object = {
   values: {
     host: '${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local'
     port: port
+    username: username
   }
   secrets: {
     // Temporarily workaround until secure outputs are added
     #disable-next-line outputs-should-not-contain-secrets
     connectionString: 'mongodb://${username}:${password}@${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local:${port}'
-    username: username
     #disable-next-line outputs-should-not-contain-secrets
     password: password
   }
