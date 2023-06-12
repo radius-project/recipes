@@ -7,7 +7,7 @@ param username string = 'admin'
 @description('Admin password for the Mongo database')
 @secure()
 #disable-next-line secure-parameter-default
-param password string = 'Pa$$word1234'
+param password string = 'Password1234=='
 
 import kubernetes as kubernetes {
   kubeConfig: ''
