@@ -13,9 +13,12 @@ import kubernetes as kubernetes {
   namespace: context.runtime.kubernetes.namespace
 }
 
+var uniqueName = 'mongo-${uniqueString(context.resource.id)}'
+var port = 27017
+
 resource mongo 'apps/Deployment@v1' = {
   metadata: {
-    name: 'mongo-${uniqueString(context.resource.id)}'
+    name: uniqueName
   }
   spec: {
     selector: {
@@ -38,7 +41,7 @@ resource mongo 'apps/Deployment@v1' = {
             image: 'mongo:4.2'
             ports: [
               {
-                containerPort: 27017
+                containerPort: port
               }
             ]
             env: [
@@ -60,9 +63,9 @@ resource mongo 'apps/Deployment@v1' = {
 
 resource svc 'core/Service@v1' = {
   metadata: {
-    name: 'mongo-${uniqueString(context.resource.id)}'
+    name: uniqueName
     labels: {
-      name: 'mongo-${uniqueString(context.resource.id)}'
+      name: uniqueName
     }
   }
   spec: {
@@ -73,7 +76,7 @@ resource svc 'core/Service@v1' = {
     }
     ports: [
       {
-        port: 27017
+        port: port
       }
     ]
   }
@@ -89,7 +92,7 @@ output result object = {
   ]
   values: {
     host: '${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local'
-    port: 27017
+    port: port
   }
   secrets: {
     // Temporarily workaround until secure outputs are added
