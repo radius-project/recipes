@@ -12,6 +12,8 @@ Recipes provide self-service infrastructure provisioning for developers. Develop
 
 The [dev](/dev) directory contains lightweight Recipes for development purposes. They run containerized infrastructure which is not persisted across restarts and is optimized for CPU and memory usage on a local machine.
 
+> **Note**: These Recipes are automatically installed via `rad init`
+
 | Recipe | Description | Template Path |
 |--------|-------------|---------------|
 | [`dev/rediscaches`](/dev/rediscaches.bicep) | A lightweight container running the `redis` image for development purposes. | `radius.azurecr.io/recipes/dev/rediscaches:TAG` |
@@ -37,7 +39,7 @@ The [aws](/aws) directory contains Recipes for AWS resources. They are configura
 Recipes are versioned using [semantic versioning](https://semver.org/). Each Recipe is tagged with its version number, and the `latest` tag points to the latest version of each Recipe. For example, Radius v0.21 uses the `0.21` tag for each Recipe:
 
 ```
-radius.azurecr.io/recipes/azure/rediscaches:0.21`
+radius.azurecr.io/recipes/azure/rediscaches:0.21
 ```
 
 ### Patching
