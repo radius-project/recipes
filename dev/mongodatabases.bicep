@@ -15,7 +15,7 @@ import kubernetes as kubernetes {
 
 resource mongo 'apps/Deployment@v1' = {
   metadata: {
-    name: 'mongo-recipe-resource'
+    name: 'mongo-${uniqueString(context.resource.id)}'
   }
   spec: {
     selector: {
@@ -60,9 +60,9 @@ resource mongo 'apps/Deployment@v1' = {
 
 resource svc 'core/Service@v1' = {
   metadata: {
-    name: 'mongo-recipe-svc'
+    name: 'mongo-${uniqueString(context.resource.id)}'
     labels: {
-      name: 'mongo-recipe-svc'
+      name: 'mongo-${uniqueString(context.resource.id)}'
     }
   }
   spec: {
