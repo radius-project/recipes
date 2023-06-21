@@ -16,6 +16,7 @@ The [dev](/dev) directory contains lightweight Recipes for development purposes.
 
 | Recipe | Description | Template Path |
 |--------|-------------|---------------|
+| [`dev/daprpubsubbrokers`](/dev/daprpubsubbrokers.bicep) | A lightweight container running the `redis` image and a Redis Dapr Pub/Sub component for development purposes. | `radius.azurecr.io/recipes/dev/daprpubsubbrokers:TAG` |
 | [`dev/rediscaches`](/dev/rediscaches.bicep) | A lightweight container running the `redis` image for development purposes. | `radius.azurecr.io/recipes/dev/rediscaches:TAG` |
 | [`dev/mongodatabases`](/dev/mongodatabases.bicep) | A lightweight container running the `mongo` image for development purposes. | `radius.azurecr.io/recipes/dev/mongodatabases:TAG` |
 
