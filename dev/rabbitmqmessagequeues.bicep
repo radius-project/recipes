@@ -86,6 +86,6 @@ output result object = {
     queue: queue
   }
   secrets: {
-    connectionString: 'amqp://${username}:${password}@${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local:${port}/virtualHost'
+    connectionString: '${username}:${password}@${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local:${port}'
   }
 }
