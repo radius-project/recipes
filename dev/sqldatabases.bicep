@@ -44,7 +44,7 @@ resource sql 'apps/Deployment@v1' = {
           {
             // This container is the running sql instance.
             name: 'sql'
-            image: 'mcr.microsoft.com/mssql/server:2022-latest'
+            image: 'mcr.microsoft.com/azure-sql-edge:1.0.7'
             ports: [
               {
                 containerPort: port 
@@ -53,11 +53,7 @@ resource sql 'apps/Deployment@v1' = {
             env: [
               {
                 name: 'ACCEPT_EULA'
-                value: 'Y'
-              }
-              {
-                name: 'MSSQL_PID'
-                value: 'Developer'
+                value: '1'
               }
               {
                 name: 'MSSQL_SA_PASSWORD'
