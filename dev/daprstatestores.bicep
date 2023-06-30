@@ -35,7 +35,7 @@ resource redis 'apps/Deployment@v1' = {
     template: {
       metadata: {
         labels: {
-          app: 'redis'
+          app: 'dapr-redis'
           resource: context.resource.name
 
           // Label pods with the application name so `rad run` can find the logs.
