@@ -4,6 +4,15 @@ param context object
 @description('Sets this Dapr State Store as the actor state store. Only one Dapr State Store can be set as the actor state store. Defaults to false.')
 param actorStateStore bool = false
 
+@description('Tag to pull for the redis container image.')
+param tag string = '7'
+
+@description('Memory request for the redis deployment.')
+param memoryRequest string = '128Mi'
+
+@description('Memory limit for the redis deployment')
+param memoryLimit string = '1024Mi'
+
 import kubernetes as kubernetes {
   kubeConfig: ''
   namespace: context.runtime.kubernetes.namespace
@@ -38,12 +47,20 @@ resource redis 'apps/Deployment@v1' = {
           {
             // This container is the running redis instance.
             name: 'redis'
-            image: 'redis:6.2'
+            image: 'redis:${tag}'
             ports: [
               {
                 containerPort: port
               }
             ]
+            resources: {
+              requests: {
+                memory: memoryRequest
+              }
+              limits: {
+                memory: memoryLimit
+              }
+            }
           }
         ]
       }
