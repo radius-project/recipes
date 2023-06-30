@@ -99,7 +99,7 @@ resource daprComponent 'dapr.io/Component@v1alpha1' = {
     metadata: [
       {
         name: 'redisHost'
-        value: '${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local'
+        value: '${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local:${port}'
       }
       {
         name: 'redisPassword'
