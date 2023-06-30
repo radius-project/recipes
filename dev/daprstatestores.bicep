@@ -120,7 +120,7 @@ output result object = {
   resources: [
     '/planes/kubernetes/local/namespaces/${svc.metadata.namespace}/providers/core/Service/${svc.metadata.name}'
     '/planes/kubernetes/local/namespaces/${redis.metadata.namespace}/providers/apps/Deployment/${redis.metadata.name}'
-    '/planes/kubernetes/local/namespaces/${daprComponent.metadata.namespace}/providers/apps/Deployment/${daprComponent.metadata.name}'
+    '/planes/kubernetes/local/namespaces/${daprComponent.metadata.namespace}/providers/dapr.io/Components/${daprComponent.metadata.name}'
   ]
   values: {
     type: daprType
