@@ -44,6 +44,6 @@ output result object = {
     port: memoryDBCluster.properties.ClusterEndpoint.Port
   }
   secrets: {
-    connectionString: 'rediss://${memoryDBCluster.properties.ClusterEndpoint.Address}:${memoryDBCluster.properties.ClusterEndpoint.Port}'
+    url: 'rediss://${memoryDBCluster.properties.ClusterEndpoint.Address}:${memoryDBCluster.properties.ClusterEndpoint.Port}'
   }
 }
