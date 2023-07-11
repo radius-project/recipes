@@ -16,9 +16,11 @@ The [dev](/dev) directory contains lightweight Recipes for development purposes.
 
 | Recipe | Description | Template Path |
 |--------|-------------|---------------|
+| [`dev/daprstatestores`](/dev/daprstatestores.bicep) | A lightweight container running the `redis` image and a Redis Dapr state store component for development purposes. | `radius.azurecr.io/recipes/dev/daprstatestores:TAG` |
 | [`dev/rabbitmqmessagequeues`](/dev/rabbitmqmessagequeues.bicep) | A lightweight container running the `rabbitmq` image for development purposes. | `radius.azurecr.io/recipes/dev/rabbitmqmessagequeues:TAG` |
 | [`dev/rediscaches`](/dev/rediscaches.bicep) | A lightweight container running the `redis` image for development purposes. | `radius.azurecr.io/recipes/dev/rediscaches:TAG` |
 | [`dev/mongodatabases`](/dev/mongodatabases.bicep) | A lightweight container running the `mongo` image for development purposes. | `radius.azurecr.io/recipes/dev/mongodatabases:TAG` |
+| [`dev/sqldatabases`](/dev/sqldatabases.bicep) | A lightweight container running the `azure-sql-edge` image for development purposes. | `radius.azurecr.io/recipes/dev/sqldatabases:TAG` |
 
 ### azure
 
