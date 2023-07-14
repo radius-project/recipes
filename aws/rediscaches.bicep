@@ -1,6 +1,6 @@
 import aws as aws
 
-@description('Radius-provided object containing information about the resouce calling the Recipe')
+@description('Radius-provided object containing information about the resource calling the Recipe')
 param context object
 
 @description('Name of the EKS cluster used for app deployment')
@@ -16,16 +16,16 @@ resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   }
 }
 
-param subnetGroupName string = 'subnet-group-memorydb-${uniqueString(context.resource.id)}'
+param memoryDBSubnetGroupName string = 'memorydb-subnetgroup-${uniqueString(context.resource.id)}'
 resource subnetGroup 'AWS.MemoryDB/SubnetGroup@default' = {
-  alias:subnetGroupName
+  alias: memoryDBSubnetGroupName
   properties: {
-    SubnetGroupName: subnetGroupName
+    SubnetGroupName: memoryDBSubnetGroupName
     SubnetIds: ((empty(subnetIds)) ? eksCluster.properties.ResourcesVpcConfig.SubnetIds : concat(subnetIds,eksCluster.properties.ResourcesVpcConfig.SubnetIds))
   }
 }
 
-param memoryDBClusterName string = 'memorydb-${uniqueString(context.resource.id)}'
+param memoryDBClusterName string = 'memorydb-cluster-${uniqueString(context.resource.id)}'
 resource memoryDBCluster 'AWS.MemoryDB/Cluster@default' = {
   alias: memoryDBClusterName
   properties: {
@@ -42,8 +42,9 @@ output result object = {
   values: {
     host: memoryDBCluster.properties.ClusterEndpoint.Address
     port: memoryDBCluster.properties.ClusterEndpoint.Port
+    tls: true
   }
   secrets: {
-    connectionString: 'rediss://${memoryDBCluster.properties.ClusterEndpoint.Address}:${memoryDBCluster.properties.ClusterEndpoint.Port}'
+    url: '${memoryDBCluster.properties.ClusterEndpoint.Address}:${memoryDBCluster.properties.ClusterEndpoint.Port},ssl=true'
   }
 }
