@@ -8,19 +8,20 @@ Recipes provide self-service infrastructure provisioning for developers. Develop
 
 ## Available Recipes
 
-### dev
+### local-dev
 
-The [dev](/dev) directory contains lightweight Recipes for development purposes. They run containerized infrastructure which is not persisted across restarts and is optimized for CPU and memory usage on a local machine.
+The [local-dev](/local-dev) directory contains lightweight Recipes for development purposes. They run containerized infrastructure which is not persisted across restarts and is optimized for CPU and memory usage on a local machine.
 
 > **Note**: These Recipes are automatically installed via `rad init`
 
 | Recipe | Description | Template Path |
 |--------|-------------|---------------|
-| [`dev/daprstatestores`](/dev/daprstatestores.bicep) | A lightweight container running the `redis` image and a Redis Dapr state store component for development purposes. | `radius.azurecr.io/recipes/dev/daprstatestores:TAG` |
-| [`dev/rabbitmqmessagequeues`](/dev/rabbitmqmessagequeues.bicep) | A lightweight container running the `rabbitmq` image for development purposes. | `radius.azurecr.io/recipes/dev/rabbitmqmessagequeues:TAG` |
-| [`dev/rediscaches`](/dev/rediscaches.bicep) | A lightweight container running the `redis` image for development purposes. | `radius.azurecr.io/recipes/dev/rediscaches:TAG` |
-| [`dev/mongodatabases`](/dev/mongodatabases.bicep) | A lightweight container running the `mongo` image for development purposes. | `radius.azurecr.io/recipes/dev/mongodatabases:TAG` |
-| [`dev/sqldatabases`](/dev/sqldatabases.bicep) | A lightweight container running the `azure-sql-edge` image for development purposes. | `radius.azurecr.io/recipes/dev/sqldatabases:TAG` |
+| [`local-dev/daprpubsubbrokers`](/local-dev/daprpubsubbrokers.bicep) | A lightweight container running the `redis` image and a Redis Dapr Pub/Sub component for development purposes. | `radius.azurecr.io/recipes/local-dev/daprpubsubbrokers:TAG` |
+| [`local-dev/daprstatestores`](/local-dev/daprstatestores.bicep) | A lightweight container running the `redis` image and a Redis Dapr state store component for development purposes. | `radius.azurecr.io/recipes/local-dev/daprstatestores:TAG` |
+| [`local-dev/rabbitmqmessagequeues`](/local-dev/rabbitmqmessagequeues.bicep) | A lightweight container running the `rabbitmq` image for development purposes. | `radius.azurecr.io/recipes/local-dev/rabbitmqmessagequeues:TAG` |
+| [`local-dev/rediscaches`](/local-dev/rediscaches.bicep) | A lightweight container running the `redis` image for development purposes. | `radius.azurecr.io/recipes/local-dev/rediscaches:TAG` |
+| [`local-dev/mongodatabases`](/local-dev/mongodatabases.bicep) | A lightweight container running the `mongo` image for development purposes. | `radius.azurecr.io/recipes/local-dev/mongodatabases:TAG` |
+| [`local-dev/sqldatabases`](/local-dev/sqldatabases.bicep) | A lightweight container running the `azure-sql-edge` image for development purposes. | `radius.azurecr.io/recipes/local-dev/sqldatabases:TAG` |
 
 ### azure
 
