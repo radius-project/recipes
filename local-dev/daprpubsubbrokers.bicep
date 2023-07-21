@@ -25,14 +25,14 @@ resource redis 'apps/Deployment@v1' = {
   spec: {
     selector: {
       matchLabels: {
-        app: 'dapr-redis'
+        app: 'dapr-pubsub-redis'
         resource: context.resource.name
       }
     }
     template: {
       metadata: {
         labels: {
-          app: 'redis'
+          app: 'dapr-pubsub-redis'
           resource: context.resource.name
 
           // Label pods with the application name so `rad run` can find the logs.
@@ -72,7 +72,7 @@ resource svc 'core/Service@v1' = {
   spec: {
     type: 'ClusterIP'
     selector: {
-      app: 'dapr-redis'
+      app: 'dapr-pubsub-redis'
       resource: context.resource.name
     }
     ports: [
