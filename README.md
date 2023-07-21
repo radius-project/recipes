@@ -16,6 +16,7 @@ The [local-dev](/local-dev) directory contains lightweight Recipes for developme
 
 | Recipe | Description | Template Path |
 |--------|-------------|---------------|
+| [`local-dev/daprpubsubbrokers`](/local-dev/daprpubsubbrokers.bicep) | A lightweight container running the `redis` image and a Redis Dapr Pub/Sub component for development purposes. | `radius.azurecr.io/recipes/local-dev/daprpubsubbrokers:TAG` |
 | [`local-dev/daprstatestores`](/local-dev/daprstatestores.bicep) | A lightweight container running the `redis` image and a Redis Dapr state store component for development purposes. | `radius.azurecr.io/recipes/local-dev/daprstatestores:TAG` |
 | [`local-dev/rediscaches`](/local-dev/rediscaches.bicep) | A lightweight container running the `redis` image for development purposes. | `radius.azurecr.io/recipes/local-dev/rediscaches:TAG` |
 | [`local-dev/mongodatabases`](/local-dev/mongodatabases.bicep) | A lightweight container running the `mongo` image for development purposes. | `radius.azurecr.io/recipes/local-dev/mongodatabases:TAG` |
