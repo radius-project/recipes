@@ -13,8 +13,8 @@ param adminLogin string
 @secure()
 param adminPassword string
 
-@description('Database name')
-param database string
+@description('Name of the SQL database. Defaults to the name of the Radius SQL resource.')
+param database string = context.resource.name
 
 resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   alias: eksClusterName
@@ -23,7 +23,7 @@ resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   }
 }
 
-var rdsSubnetGroupName = 'eshop-rds-dbsubnetgroup-${uniqueString(context.resource.id)}'
+var rdsSubnetGroupName = 'rds-dbsubnetgroup-${uniqueString(context.resource.id)}'
 resource rdsDBSubnetGroup 'AWS.RDS/DBSubnetGroup@default' = {
   alias: rdsSubnetGroupName
   properties: {
@@ -33,7 +33,7 @@ resource rdsDBSubnetGroup 'AWS.RDS/DBSubnetGroup@default' = {
   }
 }
 
-var rdsDBInstanceName = 'eshop-rds-dbinstance-${uniqueString(context.resource.id)}'
+var rdsDBInstanceName = 'rds-dbinstance-${uniqueString(context.resource.id)}'
 resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
   alias: rdsDBInstanceName
   properties: {

@@ -22,8 +22,7 @@ param database string = context.resource.name
 
 @description('SQL administrator password')
 @secure()
-#disable-next-line secure-parameter-default
-param adminPassword string = 'P@ssword1234$$'
+param adminPassword string
 
 @description('Tag to pull for the azure-sql-edge container image.')
 param tag string = '1.0.7'
@@ -33,7 +32,6 @@ param memoryRequest string = '512Mi'
 
 @description('Memory limit for the azure-sql-edge deployment')
 param memoryLimit string = '1024Mi'
-
 
 import kubernetes as kubernetes {
   kubeConfig: ''

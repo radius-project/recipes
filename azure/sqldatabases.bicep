@@ -11,10 +11,10 @@ param adminLogin string
 @secure()
 param adminPassword string
 
-@description('Database name')
-param database string
+@description('Name of the SQL database. Defaults to the name of the Radius SQL resource.')
+param database string = context.resource.name
 
-@description('The type of MSSQL server to deploy. Valid values: (Basic, Standard, Premium)')
+@description('The type of SQL database to deploy. Valid values: (Basic, Standard, Premium)')
 @allowed([
   'Basic'
   'Standard'
@@ -22,7 +22,7 @@ param database string
 ])
 param skuName string = 'Standard'
 
-@description('The size of the MSSQL server to deploy. Valid values: for C (Basic/Standard) family (0, 1, 2, 3, 4, 5, 6), for P (Premium) family (1, 2, 3, 4).')
+@description('The size of the SQL database to deploy. Valid values: for C (Basic/Standard) family (0, 1, 2, 3, 4, 5, 6), for P (Premium) family (1, 2, 3, 4).')
 @allowed([
   'Basic'
   'Standard'

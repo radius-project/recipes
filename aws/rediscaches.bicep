@@ -44,7 +44,4 @@ output result object = {
     port: memoryDBCluster.properties.ClusterEndpoint.Port
     tls: true
   }
-  secrets: {
-    url: '${memoryDBCluster.properties.ClusterEndpoint.Address}:${memoryDBCluster.properties.ClusterEndpoint.Port},ssl=true'
-  }
 }
