@@ -22,7 +22,8 @@ param database string = context.resource.name
 
 @description('SQL administrator password')
 @secure()
-param adminPassword string
+#disable-next-line secure-parameter-default
+param adminPassword string = 'P@ssword1234$$'
 
 @description('Tag to pull for the azure-sql-edge container image.')
 param tag string = '1.0.7'
