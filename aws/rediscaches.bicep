@@ -32,7 +32,7 @@ resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   }
 }
 
-param memoryDBSubnetGroupName string = 'memorydb-subnetgroup-${uniqueString(eksClusterName, context.resource.id)}'
+param memoryDBSubnetGroupName string = 'memorydb-subnetgroup-${uniqueString(context.resource.id, eksClusterName)}'
 resource subnetGroup 'AWS.MemoryDB/SubnetGroup@default' = {
   alias: memoryDBSubnetGroupName
   properties: {
@@ -41,7 +41,7 @@ resource subnetGroup 'AWS.MemoryDB/SubnetGroup@default' = {
   }
 }
 
-param memoryDBClusterName string = 'memorydb-cluster-${uniqueString(eksClusterName, context.resource.id)}'
+param memoryDBClusterName string = 'memorydb-cluster-${uniqueString(context.resource.id, eksClusterName)}'
 resource memoryDBCluster 'AWS.MemoryDB/Cluster@default' = {
   alias: memoryDBClusterName
   properties: {

@@ -39,7 +39,7 @@ resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   }
 }
 
-var rdsSubnetGroupName = 'rds-dbsubnetgroup-${uniqueString(eksClusterName, context.resource.id)}'
+var rdsSubnetGroupName = 'rds-dbsubnetgroup-${uniqueString(context.resource.id, eksClusterName)}'
 resource rdsDBSubnetGroup 'AWS.RDS/DBSubnetGroup@default' = {
   alias: rdsSubnetGroupName
   properties: {
@@ -49,7 +49,7 @@ resource rdsDBSubnetGroup 'AWS.RDS/DBSubnetGroup@default' = {
   }
 }
 
-var rdsDBInstanceName = 'rds-dbinstance-${uniqueString(eksClusterName, context.resource.id)}'
+var rdsDBInstanceName = 'rds-dbinstance-${uniqueString(context.resource.id, eksClusterName)}'
 resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
   alias: rdsDBInstanceName
   properties: {
