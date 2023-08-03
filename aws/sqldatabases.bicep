@@ -56,7 +56,7 @@ resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
     DBInstanceIdentifier: rdsDBInstanceName
     Engine: 'sqlserver-ex'
     EngineVersion: '15.00.4153.1.v1'
-    DBInstanceClass: 'db.t3.large'
+    DBInstanceClass: 'db.t3.small'
     AllocatedStorage: '20'
     MaxAllocatedStorage: 30
     MasterUsername: adminLogin
