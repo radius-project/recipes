@@ -26,18 +26,40 @@ param topicName string
 @description('The list of subscriptions to create')
 param subscriptions array = []
 
+// Service Bus configuration
+// https://learn.microsoft.com/en-us/azure/templates/microsoft.servicebus/namespaces?pivots=deployment-language-bicep
+
+@description('The SKU of the Service Bus Namespace. Valid values: (Basic, Standard, Premium)')
+@allowed([
+  'Basic'
+  'Standard'
+  'Premium'
+])
+param skuName string = 'Standard'
+
+@description('The tier of the Service Bus Namespace. Valid values: (Basic, Standard, Premium)')
+@allowed([
+  'Basic'
+  'Standard'
+  'Premium'
+])
+param skuTier string = 'Standard'
+
+@description('ISO 8601 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.')
+param defaultMessageTimeToLive string = 'P14D'
+
 resource servicebus 'Microsoft.ServiceBus/namespaces@2021-06-01-preview' = {
   name: 'servicebus-namespace-${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
   sku: {
-    name: 'Standard'
-    tier: 'Standard'
+    name: skuName
+    tier: skuTier
   }
 
   resource topic 'topics' = {
     name: topicName
     properties: {
-      defaultMessageTimeToLive: 'P14D'
+      defaultMessageTimeToLive: defaultMessageTimeToLive
       maxSizeInMegabytes: 1024
       requiresDuplicateDetection: false
       enableBatchedOperations: true
@@ -61,7 +83,7 @@ resource servicebus 'Microsoft.ServiceBus/namespaces@2021-06-01-preview' = {
       name: subscriptionName
       properties: {
         requiresSession: false
-        defaultMessageTimeToLive: 'P14D'
+        defaultMessageTimeToLive: defaultMessageTimeToLive
         deadLetteringOnMessageExpiration: true
         deadLetteringOnFilterEvaluationExceptions: true
         maxDeliveryCount: 10

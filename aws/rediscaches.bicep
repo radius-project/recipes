@@ -25,6 +25,18 @@ param eksClusterName string
 @description('List of subnetIds for the subnet group')
 param subnetIds array = []
 
+// MemoryDB Cluster configuration
+// https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-memorydb-cluster.html
+
+@description('Node type for the MemoryDB cluster')
+param nodeType string = 'db.t4g.small'
+
+@description('ACL name for the MemoryDB cluster')
+param aclName string = 'open-access'
+
+@description('Number of replicas per shard for the MemoryDB cluster')
+param numReplicasPerShard int = 0
+
 resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   alias: eksClusterName
   properties: {
@@ -46,11 +58,11 @@ resource memoryDBCluster 'AWS.MemoryDB/Cluster@default' = {
   alias: memoryDBClusterName
   properties: {
     ClusterName: memoryDBClusterName
-    NodeType: 'db.t4g.small'
-    ACLName: 'open-access'
+    NodeType: nodeType
+    ACLName: aclName
     SecurityGroupIds: [eksCluster.properties.ClusterSecurityGroupId] 
     SubnetGroupName: subnetGroup.name
-    NumReplicasPerShard: 0
+    NumReplicasPerShard: numReplicasPerShard
   }
 }
 

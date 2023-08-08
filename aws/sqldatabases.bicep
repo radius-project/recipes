@@ -32,6 +32,27 @@ param adminPassword string
 @description('Name of the SQL database. Defaults to the name of the Radius SQL resource.')
 param database string = context.resource.name
 
+// RDS DBInstance configuration
+// https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-rds-dbinstance.html
+
+@description('Database engine type')
+param engine string = 'sqlserver-ex'
+
+@description('Database engine version')
+param engineVersion string = '15.00.4153.1.v1'
+
+@description('Database instance class')
+param dbInstanceClass string = 'db.t3.small'
+
+@description('Database storage size in GB')
+param allocatedStorage string = '20'
+
+@description('Database license model')
+param licenseModel string = 'license-included'
+
+@description('Database port')
+param port string = '1433'
+
 resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   alias: eksClusterName
   properties: {
@@ -54,27 +75,22 @@ resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
   alias: rdsDBInstanceName
   properties: {
     DBInstanceIdentifier: rdsDBInstanceName
-    Engine: 'sqlserver-ex'
-    EngineVersion: '15.00.4153.1.v1'
-    DBInstanceClass: 'db.t3.small'
-    AllocatedStorage: '20'
-    MaxAllocatedStorage: 30
+    Engine: engine
+    EngineVersion: engineVersion
+    DBInstanceClass: dbInstanceClass
+    AllocatedStorage: allocatedStorage
     MasterUsername: adminLogin
     MasterUserPassword: adminPassword
     DBSubnetGroupName: rdsDBSubnetGroup.properties.DBSubnetGroupName
     VPCSecurityGroups: [eksCluster.properties.ClusterSecurityGroupId]
-    PreferredMaintenanceWindow: 'Mon:00:00-Mon:03:00'
-    PreferredBackupWindow: '03:00-06:00'
-    LicenseModel: 'license-included'
-    Timezone: 'GMT Standard Time'
-    CharacterSetName: 'Latin1_General_CI_AS'
+    LicenseModel: licenseModel
   }
 }
 
 output result object = {
   values: {
     server: rdsDBInstance.properties.Endpoint.Address
-    port: 1433
+    port: port
     database: database
     username: adminLogin
   }
