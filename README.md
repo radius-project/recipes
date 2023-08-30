@@ -94,4 +94,4 @@ We welcome contributions to this repo! Please see our [contributing guide](/CONT
 
 ## Code of Conduct
 
-Please refer to our [Radius Community Code of Conduct](https://github.com/project-radius/radius/blob/main/CODE_OF_CONDUCT.md)
+Please refer to our [Radius Community Code of Conduct](https://github.com/radius-project/radius/blob/main/CODE_OF_CONDUCT.md)
