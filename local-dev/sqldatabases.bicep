@@ -20,6 +20,9 @@ param context object
 @description('Name of the SQL database. Defaults to the name of the Radius SQL resource.')
 param database string = context.resource.name
 
+@description('SQL administrator username')
+param adminLogin string = 'sa'
+
 @description('SQL administrator password')
 @secure()
 #disable-next-line secure-parameter-default
@@ -39,7 +42,6 @@ import kubernetes as kubernetes {
   namespace: context.runtime.kubernetes.namespace
 }
 
-var adminUsername = 'sa'
 var uniqueName = 'sql-${uniqueString(context.resource.id)}'
 var port = 1433
 
@@ -133,12 +135,12 @@ output result object = {
     server: '${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local'
     port: port
     database: database
-    username: adminUsername
+    username: adminLogin
   }
   secrets: {
     #disable-next-line outputs-should-not-contain-secrets
     password: adminPassword
     #disable-next-line outputs-should-not-contain-secrets
-    connectionString: 'Server=tcp:${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local,${port};Initial Catalog=${database};User Id=${adminUsername};Password=${adminPassword};Encrypt=false'
+    connectionString: 'Server=tcp:${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local,${port};Initial Catalog=${database};User Id=${adminLogin};Password=${adminPassword};Encrypt=false'
   }
 }

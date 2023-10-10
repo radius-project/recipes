@@ -51,7 +51,7 @@ param allocatedStorage string = '20'
 param licenseModel string = 'license-included'
 
 @description('Database port')
-param port string = '1433'
+param port int = 1433
 
 resource eksCluster 'AWS.EKS/Cluster@default' existing = {
   alias: eksClusterName
