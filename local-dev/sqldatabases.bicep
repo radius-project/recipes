@@ -63,7 +63,7 @@ resource sql 'apps/Deployment@v1' = {
           resource: context.resource.name
 
           // Label pods with the application name so `rad run` can find the logs.
-          'radius.dev/application': context.application == null ? '' : context.application.name
+          'radapp.io/application': context.application == null ? '' : context.application.name
         }
       }
       spec: {

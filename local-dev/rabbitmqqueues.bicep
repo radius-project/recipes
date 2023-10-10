@@ -57,7 +57,7 @@ resource rabbitmq 'apps/Deployment@v1' = {
           app: 'rabbitmq'
           resource: context.resource.name
           // Label pods with the application name so `rad run` can find the logs.
-          'radius.dev/application': context.application == null ? '' : context.application.name
+          'radapp.io/application': context.application == null ? '' : context.application.name
         }
       }
       spec: {
