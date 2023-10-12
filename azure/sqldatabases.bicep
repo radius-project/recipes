@@ -21,11 +21,11 @@ param context object
 param location string = resourceGroup().location
 
 @description('SQL administrator username')
-param adminLogin string
+param adminLogin string = 'sqladmin'
 
 @description('SQL administrator password')
 @secure()
-param adminPassword string
+param adminPassword string = newGuid()
 
 @description('Name of the SQL database. Defaults to the name of the Radius SQL resource.')
 param database string = context.resource.name
