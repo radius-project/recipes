@@ -30,83 +30,90 @@ concurrency:
   group: publish-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
+env:
+  RAD_CLI_URL: https://get.radapp.dev/tools/rad/install.sh
+
 jobs:
   publish-dev:
-    name: Publish Recipes to Dev ACR
-    runs-on: ubuntu-latest
+    name: Publish Recipes to GHCR - Dev
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
-    env:
-      ACR_HOST: radiusdev.azurecr.io
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
     - name: Check out repo
       uses: actions/checkout@v3
-    - name: az CLI login
-      run: |
-        az login --service-principal \
-          --username ${{ secrets.AZURE_SP_TESTS_APPID }} \
-          --password ${{ secrets.AZURE_SP_TESTS_PASSWORD }} \
-          --tenant ${{ secrets.AZURE_SP_TESTS_TENANTID }}
     - name: Parse release version and set environment variables
       run: python ./.github/scripts/get_release_version.py
-    - name: Download rad-bicep
+    - name: Download rad CLI
       run: |
-        ./.github/scripts/curl-with-retries.sh https://get.radapp.dev/tools/bicep-extensibility/${{ env.REL_CHANNEL }}/linux-x64/rad-bicep --output rad-bicep
-        chmod +x rad-bicep
-        ./rad-bicep --version
-    - name: Publish Recipes to Dev ACRs
+        echo "Downloading edge rad CLI"
+        wget -q "${{ env.RAD_CLI_URL }}" -O - | /bin/bash -s edge
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish Recipes to GHCR
       # Uses REL_VERSION as the recipe version so PR builds result in a `pr-<pr number>` tag
-      run: ./.github/scripts/publish-recipes.sh . radiusdev.azurecr.io ${{ env.REL_VERSION }}
+      run: ./.github/scripts/publish-recipes.sh radius-project dev/recipes ${{ env.REL_VERSION }}
 
   delete-dev:
-    name: Delete Dev ACR Images
+    name: Delete GHCR recipes - Dev
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     needs: publish-dev
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    env:
-      ACR_HOST: radiusdev.azurecr.io
+    permissions:
+      contents: read
+      packages: write
     steps:
     - name: Check out repo
       uses: actions/checkout@v3
-    - name: az CLI login
-      run: |
-        az login --service-principal \
-          --username ${{ secrets.AZURE_SP_TESTS_APPID }} \
-          --password ${{ secrets.AZURE_SP_TESTS_PASSWORD }} \
-          --tenant ${{ secrets.AZURE_SP_TESTS_TENANTID }}
     - name: Parse release version and set environment variables
       run: python ./.github/scripts/get_release_version.py
-    - name: Delete Dev ACR Images
-      run: ./.github/scripts/delete-recipes.sh radiusdev.azurecr.io ${{ env.REL_VERSION }}
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Delete Recipes from GHCR
+      # Uses REL_VERSION as the recipe version so PR builds result in a `pr-<pr number>` tag
+      run: ./.github/scripts/delete-recipes.sh radius-project dev/recipes ${{ env.REL_VERSION }}
 
   # This is where we can add integration tests in the future
 
   publish-public:
-    name: Publish Recipes to Public ACR
-    runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
+    name: Publish Recipes to GHCR - Public
+    runs-on: ubuntu-latest
     environment: 
       name: Public
-    env:
-      ACR_HOST: radius.azurecr.io
+    permissions:
+      contents: read
+      packages: write
     steps:
     - name: Check out repo
       uses: actions/checkout@v3
-    - name: az CLI login
-      run: |
-        az login --service-principal \
-          --username ${{ secrets.AZURE_SP_TESTS_APPID }} \
-          --password ${{ secrets.AZURE_SP_TESTS_PASSWORD }} \
-          --tenant ${{ secrets.AZURE_SP_TESTS_TENANTID }}
     - name: Parse release version and set environment variables
       run: python ./.github/scripts/get_release_version.py
-    - name: Download rad-bicep
+    - name: Download rad CLI
       run: |
-        ./.github/scripts/curl-with-retries.sh https://get.radapp.dev/tools/bicep-extensibility/edge/linux-x64/rad-bicep --output rad-bicep
+        echo "Downloading edge rad CLI"
+        wget -q "${{ env.RAD_CLI_URL }}" -O - | /bin/bash -s edge
         chmod +x rad-bicep
         ./rad-bicep --version
-    - name: Publish Recipes to Prod ACR
-      run: | 
-        ./.github/scripts/publish-recipes.sh . radius.azurecr.io ${{ env.REL_CHANNEL }}
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish Recipes to GHCR
+      run: |
+        ./.github/scripts/publish-recipes.sh radius-project recipes ${{ env.REL_CHANNEL }}
         if [ "${{ env.REL_TAG }}" != "${{ env.REL_CHANNEL }}" ]; then
-          ./.github/scripts/publish-recipes.sh . radius.azurecr.io ${{ env.REL_TAG }}
+          ./.github/scripts/publish-recipes.sh radius-project recipes ${{ env.REL_TAG }}
         fi
