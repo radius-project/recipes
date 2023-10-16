@@ -22,6 +22,12 @@ if [ -z "$GHCR_ORG" ] || [ -z "$RECIPE_VERSION" ]; then
     exit 1
 fi
 
+# We create output that's intended to be consumed by the GitHub Action summary. If we're
+# not running in a GitHub Action, we'll just silence the output.
+if [[ -z "$GITHUB_STEP_SUMMARY" ]]; then
+    GITHUB_STEP_SUMMARY=/dev/null
+fi
+
 for RECIPE in $(find . -type f -name "*.bicep")
 do
     # Get the recipe name and directory name
