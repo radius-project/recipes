@@ -37,5 +37,5 @@ do
 
     echo "Publishing $DIR_NAME/$FILE_NAME to ghcr.io/$GHCR_ORG from $RECIPE"
     echo "- ghcr.io/$GHCR_ORG/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION" >> $GITHUB_STEP_SUMMARY
-    rad bicep publish $RECIPE --target "br:ghcr.io/$GHCR_ORG/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION"
+    rad bicep publish --file $RECIPE --target "br:ghcr.io/$GHCR_ORG/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION"
 done
