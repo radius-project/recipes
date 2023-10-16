@@ -13,7 +13,7 @@ BICEP_EXECUTABLE="$BICEP_PATH/rad-bicep"
 # Print usage information
 function print_usage() {
     echo "Usage: $0 <BICEP_PATH> <GHCR_ORG> <RECIPE_VERSION>"
-    echo "  Publishes all recipes in the repository to the Azure Container Registry. Requires you to be logged into GitHub"
+    echo "  Publishes all recipes in the repository to the GitHub Container Registry. Requires you to be logged into GitHub"
     echo "  BICEP_PATH: Path to the bicep executable. For example, ~/.rad/bin"
     echo "  GHCR_ORG: Organization name of the GitHub Container Registry. For example, radius-project"
     echo "  RECIPE_VERSION: Version of the recipe to publish. For example, 1.0"

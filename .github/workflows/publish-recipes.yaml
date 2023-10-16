@@ -30,6 +30,9 @@ concurrency:
   group: publish-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_RAD_CI_BOT_PAT }}
+
 jobs:
   publish-dev:
     name: Publish Recipes to Dev GHCR
