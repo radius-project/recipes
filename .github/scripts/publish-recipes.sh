@@ -1,39 +1,39 @@
 #! /bin/bash
 
-# Fail immedietly if any command fails
+# Fail immediately if any command fails
 set -e
 
 # Get command line arguments
 BICEP_PATH=$1
-ACR_HOST=$2
+GHCR_ORG=$2
 RECIPE_VERSION=$3
 
 BICEP_EXECUTABLE="$BICEP_PATH/rad-bicep"
 
 # Print usage information
 function print_usage() {
-    echo "Usage: $0 <BICEP_PATH> <ACR_HOST> <RECIPE_VERSION>"
-    echo "  Publishes all recipes in the repository to the Azure Container Registry. Requires you to be logged into Azure via az login."
+    echo "Usage: $0 <BICEP_PATH> <GHCR_ORG> <RECIPE_VERSION>"
+    echo "  Publishes all recipes in the repository to the Azure Container Registry. Requires you to be logged into GitHub"
     echo "  BICEP_PATH: Path to the bicep executable. For example, ~/.rad/bin"
-    echo "  ACR_HOST: Host name of the Azure Container Registry. For example, myregistry.azurecr.io."
+    echo "  GHCR_ORG: Organization name of the GitHub Container Registry. For example, radius-project"
     echo "  RECIPE_VERSION: Version of the recipe to publish. For example, 1.0"
 }
 
 # Verify that the required arguments are present
-if [ -z "$BICEP_PATH" ] || [ -z "$ACR_HOST" ] || [ -z "$RECIPE_VERSION" ]; then
+if [ -z "$BICEP_PATH" ] || [ -z "$GHCR_ORG" ] || [ -z "$RECIPE_VERSION" ]; then
     echo "Missing required arguments"
     print_usage
     exit 1
 fi
 
-echo "## Recipes published to $ACR_HOST" >> $GITHUB_STEP_SUMMARY
+echo "## Recipes published to ghcr.io/$GHCR_ORG" >> $GITHUB_STEP_SUMMARY
 for RECIPE in $(find . -type f -name "*.bicep")
 do
     # Get the platform (file) name and resource (directory) name
     export FILE_NAME=$(basename $RECIPE | cut -d. -f1) # rediscaches
     export DIR_NAME=$(dirname $RECIPE | cut -d/ -f2)   # dev
 
-    echo "Publishing $DIR_NAME/$FILE_NAME to $ACR_HOST from $RECIPE"
-    echo "- $ACR_HOST/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION" >> $GITHUB_STEP_SUMMARY
-    $BICEP_EXECUTABLE publish $RECIPE --target "br:$ACR_HOST/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION"
+    echo "Publishing $DIR_NAME/$FILE_NAME to ghcr.io/$GHCR_ORG from $RECIPE"
+    echo "- ghcr.io/$GHCR_ORG/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION" >> $GITHUB_STEP_SUMMARY
+    $BICEP_EXECUTABLE publish $RECIPE --target "br:ghcr.io/$GHCR_ORG/recipes/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION"
 done
