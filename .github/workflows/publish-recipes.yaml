@@ -101,8 +101,8 @@ jobs:
       run: python ./.github/scripts/get_release_version.py
     - name: Download rad CLI
       run: |
-        echo "Downloading edge rad CLI"
-        wget -q "${{ env.RAD_CLI_URL }}" -O - | /bin/bash -s edge
+        echo "Downloading latest rad CLI"
+        wget -q "${{ env.RAD_CLI_URL }}" -O - | /bin/bash
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
       with:
