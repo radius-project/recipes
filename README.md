@@ -1,6 +1,6 @@
 # Radius Community Recipes
 
-This repo contains commonly used [Recipe](https://docs.radapp.dev/recipes) templates for Radius Environments.
+test This repo contains commonly used [Recipe](https://docs.radapp.dev/recipes) templates for Radius Environments.
 
 ## Recipes
 
