@@ -17,9 +17,6 @@
 name: Publish Recipes
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
