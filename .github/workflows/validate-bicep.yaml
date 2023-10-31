@@ -14,7 +14,7 @@
 # limitations under the License.
 # ------------------------------------------------------------
 
-name: Validate Bicep Code
+name: Validate Bicep Code Test
 
 on:
   pull_request:
