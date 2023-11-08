@@ -37,6 +37,9 @@ param memoryRequest string = '512Mi'
 @description('Memory limit for the azure-sql-edge deployment')
 param memoryLimit string = '1024Mi'
 
+@description('Initial catalog to connect to. Defaults to empty string (no initial catalog).')
+param initialCatalog string = ''
+
 import kubernetes as kubernetes {
   kubeConfig: ''
   namespace: context.runtime.kubernetes.namespace
@@ -44,6 +47,7 @@ import kubernetes as kubernetes {
 
 var uniqueName = 'sql-${uniqueString(context.resource.id)}'
 var port = 1433
+var initialCatalogString = initialCatalog == '' ? '' : 'Initial Catalog=${initialCatalog};'
 
 resource sql 'apps/Deployment@v1' = {
   metadata: {
@@ -141,6 +145,6 @@ output result object = {
     #disable-next-line outputs-should-not-contain-secrets
     password: adminPassword
     #disable-next-line outputs-should-not-contain-secrets
-    connectionString: 'Server=tcp:${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local,${port};Initial Catalog=${database};User Id=${adminLogin};Password=${adminPassword};Encrypt=false'
+    connectionString: 'Server=tcp:${svc.metadata.name}.${svc.metadata.namespace}.svc.cluster.local,${port};${initialCatalogString}User Id=${adminLogin};Password=${adminPassword};Encrypt=false'
   }
 }
