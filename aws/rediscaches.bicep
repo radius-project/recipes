@@ -50,6 +50,16 @@ resource subnetGroup 'AWS.MemoryDB/SubnetGroup@default' = {
   properties: {
     SubnetGroupName: memoryDBSubnetGroupName
     SubnetIds: ((empty(subnetIds)) ? eksCluster.properties.ResourcesVpcConfig.SubnetIds : concat(subnetIds,eksCluster.properties.ResourcesVpcConfig.SubnetIds))
+    Tags: [
+      {
+        Key: 'radapp.io/application'
+        Value: context.application.id
+      }
+      {
+        Key: 'radapp.io/resource'
+        Value: context.resource.id
+      }
+    ]
   }
 }
 
@@ -63,6 +73,16 @@ resource memoryDBCluster 'AWS.MemoryDB/Cluster@default' = {
     SecurityGroupIds: [eksCluster.properties.ClusterSecurityGroupId] 
     SubnetGroupName: subnetGroup.name
     NumReplicasPerShard: numReplicasPerShard
+    Tags: [
+      {
+        Key: 'radapp.io/application'
+        Value: context.application.id
+      }
+      {
+        Key: 'radapp.io/resource'
+        Value: context.resource.id
+      }
+    ]
   }
 }
 
