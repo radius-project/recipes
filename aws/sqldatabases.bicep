@@ -67,6 +67,20 @@ resource rdsDBSubnetGroup 'AWS.RDS/DBSubnetGroup@default' = {
     DBSubnetGroupName: rdsSubnetGroupName
     DBSubnetGroupDescription: rdsSubnetGroupName
     SubnetIds: eksCluster.properties.ResourcesVpcConfig.SubnetIds
+    Tags: [
+      {
+        Key: 'radapp.io/environment'
+        Value: context.environment.id
+      }
+      {
+        Key: 'radapp.io/application'
+        Value: context.application.id
+      }
+      {
+        Key: 'radapp.io/resource'
+        Value: context.resource.id
+      }
+    ]
   }
 }
 
@@ -84,6 +98,20 @@ resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
     DBSubnetGroupName: rdsDBSubnetGroup.properties.DBSubnetGroupName
     VPCSecurityGroups: [eksCluster.properties.ClusterSecurityGroupId]
     LicenseModel: licenseModel
+    Tags: [
+      {
+        Key: 'radapp.io/environment'
+        Value: context.environment.id
+      }
+      {
+        Key: 'radapp.io/application'
+        Value: context.application.id
+      }
+      {
+        Key: 'radapp.io/resource'
+        Value: context.resource.id
+      }
+    ]
   }
 }
 
