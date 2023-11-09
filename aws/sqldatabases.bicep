@@ -69,6 +69,10 @@ resource rdsDBSubnetGroup 'AWS.RDS/DBSubnetGroup@default' = {
     SubnetIds: eksCluster.properties.ResourcesVpcConfig.SubnetIds
     Tags: [
       {
+        Key: 'radapp.io/environment'
+        Value: context.environment.id
+      }
+      {
         Key: 'radapp.io/application'
         Value: context.application.id
       }
