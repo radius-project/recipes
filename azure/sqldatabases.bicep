@@ -78,7 +78,7 @@ output result object = {
   values: {
     server: mssql.properties.fullyQualifiedDomainName
     port: mssqlPort
-    database: mssql::db.name
+    database: database
     username: adminLogin
   }
   secrets: {
