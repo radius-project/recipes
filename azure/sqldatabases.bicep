@@ -49,7 +49,7 @@ param skuTier string = 'Standard'
 var mssqlPort = 1433
 
 resource mssql 'Microsoft.Sql/servers@2021-02-01-preview' = {
-  name: 'mssql-${uniqueString(context.resource.id, resourceGroup().id)}'
+  name: '${context.resource.name}-${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
   properties: {
     administratorLogin: adminLogin
