@@ -85,6 +85,6 @@ output result object = {
     #disable-next-line outputs-should-not-contain-secrets
     password: adminPassword
     #disable-next-line outputs-should-not-contain-secrets
-    connectionString: 'Server=tcp:${mssql.properties.fullyQualifiedDomainName},${mssqlPort};Initial Catalog=${mssql::db.name};User Id=${adminLogin};Password=${adminPassword};Encrypt=false'
+    connectionString: 'Server=tcp:${mssql.properties.fullyQualifiedDomainName},${mssqlPort};Initial Catalog=${database};User Id=${adminLogin};Password=${adminPassword};Encrypt=false'
   }
 }
