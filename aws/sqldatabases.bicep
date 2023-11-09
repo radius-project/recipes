@@ -96,6 +96,10 @@ resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
     LicenseModel: licenseModel
     Tags: [
       {
+        Key: 'radapp.io/environment'
+        Value: context.environment.id
+      }
+      {
         Key: 'radapp.io/application'
         Value: context.application.id
       }
