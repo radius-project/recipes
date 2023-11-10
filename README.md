@@ -16,12 +16,13 @@ The [local-dev](/local-dev) directory contains lightweight Recipes for developme
 
 | Recipe | Resource | Description | Template Path |
 |--------|----------|-------------|---------------|
-| [`local-dev/daprpubsubbrokers`](/local-dev/pubsubbrokers.bicep) | `Applications.Dapr/pubSubBrokers` | A lightweight container running the `redis` image and a Redis Dapr Pub/Sub component for development purposes. | `radius.azurecr.io/recipes/local-dev/daprpubsubbrokers:TAG` |
-| [`local-dev/daprstatestores`](/local-dev/statestores.bicep) | `Applications.Dapr/stateStores` |A lightweight container running the `redis` image and a Redis Dapr state store component for development purposes. | `radius.azurecr.io/recipes/local-dev/daprstatestores:TAG` |
-| [`local-dev/rabbitmqmessagequeues`](/local-dev/rabbitmqmessagequeues.bicep) | `Applications.Messaging/rabbitMQQueues` |A lightweight container running the `rabbitmq` image for development purposes. | `radius.azurecr.io/recipes/local-dev/rabbitmqmessagequeues:TAG` |
-| [`local-dev/rediscaches`](/local-dev/rediscaches.bicep) | `Applications.Datastores/redisCaches` |A lightweight container running the `redis` image for development purposes. | `radius.azurecr.io/recipes/local-dev/rediscaches:TAG` |
-| [`local-dev/mongodatabases`](/local-dev/mongodatabases.bicep) | `Applications.Datastores/mongoDatabases` |A lightweight container running the `mongo` image for development purposes. | `radius.azurecr.io/recipes/local-dev/mongodatabases:TAG` |
-| [`local-dev/sqldatabases`](/local-dev/sqldatabases.bicep) | `Applications.Datastores/sqlDatabases` |A lightweight container running the `azure-sql-edge` image for development purposes. | `radius.azurecr.io/recipes/local-dev/sqldatabases:TAG` |
+| [`local-dev/daprpubsubbrokers`](/local-dev/pubsubbrokers.bicep) | `Applications.Dapr/pubSubBrokers` | A lightweight container running the `redis` image and a Redis Dapr Pub/Sub component for development purposes. | `ghcr.io/radius-project/recipes/local-dev/daprpubsubbrokers:TAG` |
+| [`local-dev/daprstatestores`](/local-dev/statestores.bicep) | `Applications.Dapr/stateStores` |A lightweight container running the `redis` image and a Redis Dapr state store component for development purposes. | `ghcr.io/radius-project/recipes/local-dev/daprstatestores:TAG` |
+| [`local-dev/extender-postgresql`](/local-dev/extender-postgresql.bicep) | `Applications.Core/extenders` |A lightweight container running the `postgres` image for development purposes. Used with the Radius extender resource. | `ghcr.io/radius-project/recipes/local-dev/extender-postgresql:TAG` |
+| [`local-dev/rabbitmqmessagequeues`](/local-dev/rabbitmqmessagequeues.bicep) | `Applications.Messaging/rabbitMQQueues` |A lightweight container running the `rabbitmq` image for development purposes. | `ghcr.io/radius-project/recipes/local-dev/rabbitmqmessagequeues:TAG` |
+| [`local-dev/rediscaches`](/local-dev/rediscaches.bicep) | `Applications.Datastores/redisCaches` |A lightweight container running the `redis` image for development purposes. | `ghcr.io/radius-project/recipes/local-dev/rediscaches:TAG` |
+| [`local-dev/mongodatabases`](/local-dev/mongodatabases.bicep) | `Applications.Datastores/mongoDatabases` |A lightweight container running the `mongo` image for development purposes. | `ghcr.io/radius-project/recipes/local-dev/mongodatabases:TAG` |
+| [`local-dev/sqldatabases`](/local-dev/sqldatabases.bicep) | `Applications.Datastores/sqlDatabases` |A lightweight container running the `azure-sql-edge` image for development purposes. | `ghcr.io/radius-project/recipes/local-dev/sqldatabases:TAG` |
 
 ### azure
 
@@ -29,7 +30,7 @@ The [azure](/azure) directory contains Recipes for Azure resources. They are con
 
 | Recipe | Resource | Description | Template Path |
 |--------|----------|-------------|---------------|
-| [`azure/rediscaches`](/azure/rediscaches.bicep) | `Applications.Datastores/redisCaches` | An Azure Cache for Redis resource with a configurable size and SKU. | `radius.azurecr.io/recipes/azure/rediscaches:TAG` |
+| [`azure/rediscaches`](/azure/rediscaches.bicep) | `Applications.Datastores/redisCaches` | An Azure Cache for Redis resource with a configurable size and SKU. | `ghcr.io/radius-project/recipes/azure/rediscaches:TAG` |
 
 ### aws
 
@@ -37,14 +38,14 @@ The [aws](/aws) directory contains Recipes for AWS resources. They are configura
 
 | Recipe | Resource | Description | Template Path |
 |--------|----------|-------------|---------------|
-| [`aws/rediscaches`](/aws/rediscaches.bicep) | `Applications.Datastores/redisCaches` | An AWS MemoryDB resource with a configurable size and SKU. | `radius.azurecr.io/recipes/aws/rediscaches:TAG` |
+| [`aws/rediscaches`](/aws/rediscaches.bicep) | `Applications.Datastores/redisCaches` | An AWS MemoryDB resource with a configurable size and SKU. | `ghcr.io/radius-project/recipes/aws/rediscaches:TAG` |
 
 ## Versioning and Tags
 
 Recipes are versioned using [semantic versioning](https://semver.org/). Each Recipe is tagged with its version number, and the `latest` tag points to the latest version of each Recipe. For example, Radius v0.21 uses the `0.21` tag for each Recipe:
 
 ```
-radius.azurecr.io/recipes/azure/rediscaches:0.21
+ghcr.io/radius-project/recipes/azure/rediscaches:0.21
 ```
 
 ### Patching
@@ -61,7 +62,7 @@ To use a community recipe from this repo, simply use [`rad recipe register`](htt
 rad recipe register azure \
   --environment myenv \
   --template-kind bicep \ 
-  --template-path "radius.azurecr.io/recipes/azure/rediscaches:TAG" \
+  --template-path "ghcr.io/radius-project/recipes/azure/rediscaches:TAG" \
   --resource-type "Applications.Datastores/redisCaches"
 ```
 
@@ -78,7 +79,7 @@ resource myenv 'Applications.Core/environments' = {
       'Applications.Core/redisCaches': {
         'azure': {
           template-kind: 'bicep'
-          template-path: 'radius.azurecr.io/recipes/azure/rediscaches:0.21'
+          template-path: 'ghcr.io/radius-project/recipes/azure/rediscaches:0.21'
         }
       }
     }
