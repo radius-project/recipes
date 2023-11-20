@@ -101,7 +101,7 @@ resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
     DBSubnetGroupName: rdsDBSubnetGroup.properties.DBSubnetGroupName
     VPCSecurityGroups: [eksCluster.properties.ClusterSecurityGroupId]
     LicenseModel: licenseModel
-<<<<<<< Updated upstream
+    BackupRetentionPeriod: backupRetentionPeriod
     Tags: [
       {
         Key: 'radapp.io/environment'
@@ -116,9 +116,6 @@ resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
         Value: context.resource.id
       }
     ]
-=======
-    BackupRetentionPeriod: backupRetentionPeriod
->>>>>>> Stashed changes
   }
 }
 
