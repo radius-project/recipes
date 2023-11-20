@@ -50,6 +50,9 @@ param allocatedStorage string = '20'
 @description('Database license model')
 param licenseModel string = 'license-included'
 
+@description('The number of days for which automated backups are retained. Setting this parameter to a positive number enables backups. Defaults to 0.')
+param backupRetentionPeriod int = 0
+
 @description('Database port')
 param port int = 1433
 
@@ -98,6 +101,7 @@ resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
     DBSubnetGroupName: rdsDBSubnetGroup.properties.DBSubnetGroupName
     VPCSecurityGroups: [eksCluster.properties.ClusterSecurityGroupId]
     LicenseModel: licenseModel
+<<<<<<< Updated upstream
     Tags: [
       {
         Key: 'radapp.io/environment'
@@ -112,6 +116,9 @@ resource rdsDBInstance 'AWS.RDS/DBInstance@default' = {
         Value: context.resource.id
       }
     ]
+=======
+    BackupRetentionPeriod: backupRetentionPeriod
+>>>>>>> Stashed changes
   }
 }
 
