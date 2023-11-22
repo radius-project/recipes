@@ -61,6 +61,7 @@ jobs:
           if [[ -z "${{ inputs.version }}" ]]; then
               RADIUS_VERSION=edge
           fi
+          chmod +x ./.github/scripts/install-radius.sh
           ./.github/scripts/install-radius.sh $RADIUS_VERSION
       - name: Publish Recipes
         if: steps.gen-id.outputs.RUN_TEST == 'true'
