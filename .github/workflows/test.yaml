@@ -28,7 +28,7 @@ jobs:
         id: gen-id
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            RUN_TEST=false
+            RUN_TEST=true
           else
             RUN_TEST=true
           fi
