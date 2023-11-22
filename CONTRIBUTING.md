@@ -46,7 +46,7 @@ This section describes the guidelines for contributing code / docs to Radius Rec
 
 ### Prerequisites
 
-Make sure you are familiar with how to author and test Recipes. The [custom Recipes docs](https://docs.radapp.dev/operations/custom-recipes/) will walk you through the process. Make sure to test with your own registry and environment before submitting a PR.
+Make sure you are familiar with how to author and test Recipes. The [custom Recipes docs](https://docs.radapp.io/guides/recipes/howto-author-recipes/) will walk you through the process. Make sure to test with your own registry and environment before submitting a PR.
 
 ### Pull Requests
 
