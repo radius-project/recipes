@@ -1,0 +1,81 @@
+name: Test Recipes
+
+on:
+  workflow_dispatch:
+      inputs:
+        version:
+          description: 'Radius version number to use (e.g. 0.1.0, 0.1.0-rc1, edge). Defaults to edge.'
+          required: false
+          default: 'edge'
+          type: string
+  push:
+    branches:
+      - v*.*
+      - edge
+    paths:
+      - "local-dev/**"
+      - ".github/workflows/**"
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - v*.*
+      - edge
+env:
+  RUN_IDENTIFIER: recipestest-${{ github.run_id }}-${{ github.run_attempt }}
+jobs:
+  test:
+    name: "Recipe tests"
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Generate output variables
+        id: gen-id
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request"; then
+            RUN_TEST=false
+          else
+            RUN_TEST=true
+          fi
+      - name: Setup Node
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Download k3d
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        run: wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+      - name: Create k3d cluster
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        run: k3d cluster create --agents 2 -p "80:80@loadbalancer" --k3s-arg "--disable=traefik@server:0" --registry-create "k3d-registry" --port 51351
+      - name: Install Dapr
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        run: |
+          helm repo add dapr https://dapr.github.io/helm-charts/
+          helm install dapr dapr/dapr --version=1.6 --namespace dapr-system --create-namespace --wait
+      - name: Download rad CLI
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        run: |
+          RADIUS_VERSION="${{ inputs.version }}"
+          if [[ -z "${{ inputs.version }}" ]]; then
+              RADIUS_VERSION=edge
+          fi
+          ./.github/scripts/install-radius.sh $RADIUS_VERSION
+      - name: Publish Recipes
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        run: |
+          files_list=$(ls "local-dev")
+          for file in $files_list; do
+            echo "Publishing recipe: $file"
+            rad bicep publish --file $file --target br:localhost:51351/recipes/local-dev/$file:latest --plain-http
+          done
+      - name: Initialize default environment
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        run: |
+          rad install kubernetes --set rp.publicEndpointOverride=localhost
+          rad group create default
+          rad workspace create kubernetes default --group default
+          rad group switch default
+          rad env create default
+          rad env switch default
+          
+      
+  
