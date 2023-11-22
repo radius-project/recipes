@@ -17,9 +17,6 @@ on:
       - ".github/workflows/**"
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:
-      - v*.*
-      - edge
 env:
   RUN_IDENTIFIER: recipestest-${{ github.run_id }}-${{ github.run_attempt }}
 jobs:
