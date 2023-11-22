@@ -34,7 +34,7 @@ jobs:
           fi
           # Set output variables to be used in the other jobs
           echo "RUN_IDENTIFIER=${RUN_IDENTIFIER}" >> $GITHUB_OUTPUT
-          echo "RUN_TEST=${RUN_TEST}" >> $GITHUB_OUTPUT
+          echo "RUN_TEST=${RUN_TEST}" >> $GITHUB_OUTPU
       - name: Setup Node
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         uses: actions/setup-node@v3
