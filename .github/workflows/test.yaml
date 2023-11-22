@@ -68,8 +68,8 @@ jobs:
         run: |
           files_list=$(ls "local-dev")
           for file in $files_list; do
-            echo "Publishing recipe: $file"
-            rad bicep publish --file $file --target br:localhost:51351/recipes/local-dev/$file:latest --plain-http
+            echo "Publishing recipe: local-dev/$file"
+            rad bicep publish --file local-dev/$file --target br:localhost:51351/recipes/local-dev/$file:latest --plain-http
           done
       - name: Initialize default environment
         if: steps.gen-id.outputs.RUN_TEST == 'true'
