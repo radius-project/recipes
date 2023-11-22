@@ -67,7 +67,7 @@ jobs:
       - name: Publish Recipes
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         run: |
-          files_list=$(ls "local-dev")
+          files_list=$(ls "azure")
           for file in $files_list; do
             echo "Publishing recipe: $file"
             rad bicep publish --file $file --target br:localhost:51351/recipes/local-dev/$file:latest --plain-http
