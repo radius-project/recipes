@@ -9,6 +9,9 @@ on:
           default: 'edge'
           type: string
   push:
+    branches:
+      - v*.*
+      - edge
     paths:
       - "local-dev/**"
       - ".github/workflows/**"
@@ -27,7 +30,7 @@ jobs:
       - name: Generate output variables
         id: gen-id
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request"; then
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             RUN_TEST=false
           else
             RUN_TEST=true
