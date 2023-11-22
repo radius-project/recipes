@@ -35,6 +35,9 @@ jobs:
           # Set output variables to be used in the other jobs
           echo "RUN_IDENTIFIER=${RUN_IDENTIFIER}" >> $GITHUB_OUTPUT
           echo "RUN_TEST=${RUN_TEST}" >> $GITHUB_OUTPUT
+      - name: Checkout code
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        uses: actions/checkout@v3
       - name: Setup Node
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         uses: actions/setup-node@v3
@@ -54,20 +57,15 @@ jobs:
       - name: Download rad CLI
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         run: |
-          # RADIUS_VERSION="${{ inputs.version }}"
-          # if [[ -z "${{ inputs.version }}" ]]; then
-          #     RADIUS_VERSION=edge
-          # fi
-          # ./.github/scripts/install-radius.sh $RADIUS_VERSION
-          RAD_CLI_EDGE_URL=ghcr.io/radius-project/rad/linux-amd64:latest
-          echo Downloading rad CLI edge version
-          oras pull $RAD_CLI_EDGE_URL
-          chmod +x ./rad
-          mv ./rad /usr/local/bin/rad
+          RADIUS_VERSION="${{ inputs.version }}"
+          if [[ -z "${{ inputs.version }}" ]]; then
+              RADIUS_VERSION=edge
+          fi
+          ./.github/scripts/install-radius.sh $RADIUS_VERSION
       - name: Publish Recipes
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         run: |
-          files_list=$(ls "azure")
+          files_list=$(ls "local-dev")
           for file in $files_list; do
             echo "Publishing recipe: $file"
             rad bicep publish --file $file --target br:localhost:51351/recipes/local-dev/$file:latest --plain-http
