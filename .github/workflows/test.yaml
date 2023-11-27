@@ -89,6 +89,7 @@ jobs:
             testFile=tests/$file
             echo "Deploying bicep file $testFile"
             rad deploy $testFile --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+            echo "==========================="
           done
           
       
