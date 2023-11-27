@@ -32,11 +32,11 @@ jobs:
           #   namespace: dsrp-resources-mongodb-recipe-app
           #   path: ./tests/mongodatabases.bicep
           #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
-          - name: sqldatabases
-            app: dsrp-resources-sqldb-recipe
-            namespace: dsrp-resources-sqldb-recipe-app
-            path: ./tests/sqldatabases.bicep
-            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          # - name: sqldatabases
+          #   app: dsrp-resources-sqldb-recipe
+          #   namespace: dsrp-resources-sqldb-recipe-app
+          #   path: ./tests/sqldatabases.bicep
+          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
           # - name: rediscaches
           #   app: dsrp-resources-redis-recipe
           #   namespace: dsrp-resources-redis-recipe-app
@@ -52,6 +52,17 @@ jobs:
           #   namespace: daprrp-rs-secretstore-recipe
           #   path: ./tests/secretstores.bicep
           #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          - name: statestores
+            app: daprrp-rs-sts-recipe
+            namespace: daprrp-rs-sts-recipe
+            path: ./tests/statestores.bicep
+            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          - name: pubsubbrokers
+            app: dpsb-recipe-app
+            namespace: dpsb-recipe-app
+            path: ./tests/statestores.bicep
+            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+
     steps:
       - name: Generate output variables
         id: gen-id
