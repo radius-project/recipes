@@ -41,7 +41,7 @@ jobs:
             app: msgrp-resources-rabbitmq-recipe
             namespace: msgrp-resources-rabbitmq-default-recipe-app
             path: ./tests/rabbitmqqueues.bicep
-            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest" --parameters password="guest"
+            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
           - name: secretstores
             app: daprrp-rs-secretstore-recipe
             namespace: daprrp-rs-secretstore-recipe

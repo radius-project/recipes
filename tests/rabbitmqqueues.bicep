@@ -9,10 +9,6 @@ param magpieImage string
 @description('Specifies the port for the container resource.')
 param magpiePort int = 3000
 
-@description('Specifies the RabbitMQ password.')
-@secure()
-param password string
-
 resource env 'Applications.Core/environments@2023-10-01-preview' = {
   name: 'msgrp-resources-environment-rabbitmq-recipe-env'
   location: 'global'
@@ -28,9 +24,6 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
           templateKind: 'bicep'
           plainHTTP: true
           templatePath: 'reciperegistry:5000/recipes/local-dev/rabbitmqqueues:latest'
-          parameters: {
-            password: password
-          }
         }
       }
     }
