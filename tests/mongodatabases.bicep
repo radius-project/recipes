@@ -1,6 +1,6 @@
 import radius as radius
 
-param magpieimage string 
+param magpieimage string
 
 resource env 'Applications.Core/environments@2023-10-01-preview' = {
   name: 'dsrp-resources-mongodb-recipe-env'

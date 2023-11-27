@@ -1,6 +1,7 @@
 import radius as radius
 
 param scope string = resourceGroup().id
+param magpieimage string
 
 resource env 'Applications.Core/environments@2023-10-01-preview' = {
   name: 'dsrp-resources-env-recipe-env'
@@ -10,11 +11,6 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
       kind: 'kubernetes'
       resourceId: 'self'
       namespace: 'dsrp-resources-env-recipe-env' 
-    }
-    providers: {
-      azure: {
-        scope: scope
-      }
     }
     recipes: {
       'Applications.Datastores/redisCaches':{
@@ -39,6 +35,30 @@ resource app 'Applications.Core/applications@2023-10-01-preview' = {
           namespace: 'dsrp-resources-redis-recipe-app'
       }
     ]
+  }
+}
+
+resource webapp 'Applications.Core/containers@2023-10-01-preview' = {
+  name: 'rds-app-ctnr'
+  location: 'global'
+  properties: {
+    application: app.id
+    container: {
+      image: magpieimage
+      env: {
+        DBCONNECTION: redis.connectionString()
+      }
+      readinessProbe:{
+        kind: 'httpGet'
+        containerPort: 3000
+        path: '/healthz'
+      }
+    }
+    connections: {
+      redis: {
+        source: redis.id
+      }
+    }
   }
 }
 
