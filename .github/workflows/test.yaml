@@ -28,13 +28,15 @@ jobs:
       matrix:
         include:
           - name: mongodatabases
+            app: dsrp-resources-mongodb-recipe
             namespace: dsrp-resources-mongodb-recipe-app
             path: ./tests/mongodatabases.bicep
             args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
           - name: rediscaches
+            app: dsrp-resources-redis-recipe
             namespace: dsrp-resources-redis-recipe-app
             path: ./tests/rediscaches.bicep
-            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+
     steps:
       - name: Generate output variables
         id: gen-id
@@ -110,7 +112,8 @@ jobs:
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         id: wait-for-pods
         run: |
-          kubectl wait --for=condition=Ready pod -n ${{ matrix.namespace }} --timeout=5m
+          label="radapp.io/application=${{ matrix.app }}"
+          kubectl wait --for=condition=Ready pod -l $label -n ${{ matrix.namespace }} --timeout=5m
           
       
   
