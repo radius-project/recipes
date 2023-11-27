@@ -23,6 +23,14 @@ jobs:
   test:
     name: "Recipe tests"
     runs-on: [ubuntu-latest]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: mongodatabases
+            namespace: dsrp-resources-mongodb-recipe-app
+            path: ./tests/mongodatabases.bicep
+            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
     steps:
       - name: Generate output variables
         id: gen-id
@@ -91,6 +99,14 @@ jobs:
             rad deploy $testFile --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
             echo "==========================="
           done
+      - name: Deploy app
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        run: rad deploy ${{ matrix.path }} ${{ matrix.args }}
+      - name: Wait for all pods to be ready
+        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        id: wait-for-pods
+        run: |
+          kubectl wait --for=condition=Ready pod -n ${{ matrix.namespace }} --timeout=5m
           
       
   
