@@ -8,13 +8,6 @@ param magpieImage string
 @description('Specifies the port for the container resource.')
 param magpiePort int = 3000
 
-@description('Specifies the SQL username.')
-param username string = 'sa'
-
-@description('Specifies the SQL password.')
-@secure()
-param password string = newGuid()
-
 resource env 'Applications.Core/environments@2023-10-01-preview' = {
   name: 'dsrp-resources-env-sql-recipe-env'
   location: 'global'
@@ -30,10 +23,6 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
           templateKind: 'bicep'
           plainHTTP: true
           templatePath: 'reciperegistry:5000/recipes/local-dev/sqldatabases:latest'
-          parameters: {
-            username: username
-            password: password
-          }
         }
       }
     }
