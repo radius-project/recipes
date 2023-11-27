@@ -11,7 +11,7 @@ param magpiePort int = 3000
 
 @description('Specifies the RabbitMQ password.')
 @secure()
-param password string = 'guest'
+param password string
 
 resource env 'Applications.Core/environments@2023-10-01-preview' = {
   name: 'msgrp-resources-environment-rabbitmq-recipe-env'
