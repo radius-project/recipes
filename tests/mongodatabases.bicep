@@ -4,10 +4,6 @@ param rg string = resourceGroup().name
 
 param sub string = subscription().subscriptionId
 
-param registry string 
-
-param version string
-
 param magpieimage string 
 
 resource env 'Applications.Core/environments@2023-10-01-preview' = {
@@ -28,7 +24,8 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
       'Applications.Datastores/mongoDatabases':{
         mongoazure: {
           templateKind: 'bicep'
-          templatePath: '${registry}/test/functional/shared/recipes/mongodb-recipe-kubernetes:${version}' 
+          plainHTTP: true
+          templatePath: 'k3d-registry:5000/recipes/local-dev/mongodatabases:latest'
         }
       }
     }
