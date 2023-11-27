@@ -28,6 +28,7 @@ var daprVersion = 'v1'
 resource daprComponent 'dapr.io/Component@v1alpha1' = {
   metadata: {
     name: context.resource.name
+    namespace: context.runtime.kubernetes.namespace
   }
   spec: {
     type: daprType
@@ -47,5 +48,6 @@ output result object = {
     type: daprType
     version: daprVersion
     metadata: daprComponent.spec.metadata
+    componentName: daprComponent.metadata.name
   }
 }
