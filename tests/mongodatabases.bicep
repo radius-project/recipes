@@ -16,7 +16,7 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
         mongoazure: {
           templateKind: 'bicep'
           plainHTTP: true
-          templatePath: 'k3d-registry:5000/recipes/local-dev/mongodatabases:latest'
+          templatePath: 'reciperegistry:5000/recipes/local-dev/mongodatabases:latest'
         }
       }
     }
