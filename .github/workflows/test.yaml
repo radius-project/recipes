@@ -36,7 +36,12 @@ jobs:
             app: dsrp-resources-redis-recipe
             namespace: dsrp-resources-redis-recipe-app
             path: ./tests/rediscaches.bicep
-
+            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          - name: rabbitmqqueues
+            app: msgrp-resources-rabbitmq-recipe
+            namespace: msgrp-resources-rabbitmq-default-recipe-app
+            path: ./tests/rabbitmqqueues.bicep
+            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
     steps:
       - name: Generate output variables
         id: gen-id
