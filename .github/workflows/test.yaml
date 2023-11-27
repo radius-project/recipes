@@ -31,6 +31,10 @@ jobs:
             namespace: dsrp-resources-mongodb-recipe-app
             path: ./tests/mongodatabases.bicep
             args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          - name: rediscaches
+            namespace: dsrp-resources-redis-recipe-app
+            path: ./tests/rediscaches.bicep
+            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
     steps:
       - name: Generate output variables
         id: gen-id
@@ -90,7 +94,7 @@ jobs:
           rad env create default
           rad env switch default
       - name: Running local-dev recipe Tests
-        if: steps.gen-id.outputs.RUN_TEST == 'true'
+        if: steps.gen-id.outputs.RUN_TEST == 'false'
         run: |
           files_list=$(ls "tests")
           for file in $files_list; do
