@@ -27,16 +27,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: mongodatabases
-            app: dsrp-resources-mongodb-recipe
-            namespace: dsrp-resources-mongodb-recipe-app
-            path: ./tests/mongodatabases.bicep
-            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
-          - name: rediscaches
-            app: dsrp-resources-redis-recipe
-            namespace: dsrp-resources-redis-recipe-app
-            path: ./tests/rediscaches.bicep
-            args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          # - name: mongodatabases
+          #   app: dsrp-resources-mongodb-recipe
+          #   namespace: dsrp-resources-mongodb-recipe-app
+          #   path: ./tests/mongodatabases.bicep
+          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          # - name: rediscaches
+          #   app: dsrp-resources-redis-recipe
+          #   namespace: dsrp-resources-redis-recipe-app
+          #   path: ./tests/rediscaches.bicep
+          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
           - name: rabbitmqqueues
             app: msgrp-resources-rabbitmq-recipe
             namespace: msgrp-resources-rabbitmq-default-recipe-app

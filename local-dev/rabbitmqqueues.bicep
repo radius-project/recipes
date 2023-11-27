@@ -18,13 +18,7 @@ limitations under the License.
 param context object
 
 @description('Tag to pull for the rabbitmq container image.')
-param tag string = '3'
-
-@description('Memory request for the rabbitmq deployment.')
-param memoryRequest string = '256Mi'
-
-@description('Memory limit for the rabbitmq deployment')
-param memoryLimit string = '1024Mi'
+param tag string = '3.10'
 
 import kubernetes as kubernetes {
   kubeConfig: ''
@@ -67,21 +61,13 @@ resource rabbitmq 'apps/Deployment@v1' = {
                 containerPort: port
               }
             ]
-            resources: {
-              requests: {
-                memory: memoryRequest
-              }
-              limits: {
-                memory: memoryLimit
-              }
-            }
             env: [
               {
-                name: 'RABBITMQ_DEFAULT_USER'
+                name: 'RABBIT_USERNAME'
                 value: username
               }
               {
-                name: 'RABBITMQ_DEFAULT_PASS'
+                name: 'RABBIT_PASSWORD'
                 value: password
               }
             ]
