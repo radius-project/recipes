@@ -88,12 +88,7 @@ jobs:
           for file in $files_list; do
             testFile=tests/$file
             echo "Deploying bicep file $testFile"
-            rad deploy $testFile" --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
-
-            # echo "Waiting for pods to be ready"
-            # namespace="${{ matrix.env }}-${{ matrix.app }}"
-            # label="radapp.io/application=${{ matrix.app }}"
-            # kubectl wait --for=condition=Ready pod -l $label -n $namespace --timeout=5m
+            rad deploy $testFile" --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"            
           done
           
       
