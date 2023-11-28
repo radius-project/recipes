@@ -4,6 +4,11 @@ param magpieimage string
 
 param location string = resourceGroup().location
 
+import kubernetes as kubernetes {
+  namespace: 'daprrp-rs-secretstore-recipe'
+  kubeConfig: ''
+}
+
 resource env 'Applications.Core/environments@2023-10-01-preview' = {
   name: 'daprrp-env-secretstore-recipes-env'
   properties: {
@@ -22,6 +27,15 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
       }
     }
   }
+}
+
+resource mysecret 'core/Secret@v1' = {
+  metadata: {
+    name: 'mysecret'
+    namespace: 'daprrp-rs-secretstore-recipe'
+  }
+  type: 'opaque'
+  data: {}
 }
 
 resource app 'Applications.Core/applications@2023-10-01-preview' = {
