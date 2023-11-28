@@ -131,6 +131,7 @@ jobs:
           popd
       - name: Deploy app
         if: steps.gen-id.outputs.RUN_TEST == 'true'
+        id: deploy-app
         run: rad deploy ${{ matrix.path }} ${{ matrix.args }}
       - name: Wait for all pods to be ready
         if: steps.gen-id.outputs.RUN_TEST == 'true'
@@ -138,6 +139,27 @@ jobs:
         run: |
           label="radapp.io/application=${{ matrix.app }}"
           kubectl wait --for=condition=Ready pod -l $label -n ${{ matrix.namespace }} --timeout=5m
-          
-      
+      - name: Get Pod logs for failed tests
+        id: get-pod-logs
+        if: failure() && (steps.deploy-app.outcome == 'failure' || steps.wait-for-pods.outcome == 'failure')
+        run: |
+          # Create pod-logs directory
+          mkdir -p recipe-tests/pod-logs/${{ matrix.name }}
+          # Get pod logs and save to file
+          label="radapp.io/application=${{ matrix.app }}"
+          pod_names=($(kubectl get pods -l $label -n ${{ matrix.namespace }} -o jsonpath='{.items[*].metadata.name}'))
+          for pod_name in "${pod_names[@]}"; do
+            kubectl logs $pod_name -n $namespace > recipe-tests/pod-logs/${{ matrix.name }}/${pod_name}.txt
+          done
+          echo "Pod logs saved to recipe-tests/pod-logs/${{ matrix.name }}/"
+          # Get kubernetes events and save to file
+          kubectl get events -n ${{ matrix.namespace }} > recipe-tests/pod-logs/${{ matrix.name }}/events.txt
+      - name: Upload Pod logs for failed tests
+        uses: actions/upload-artifact@v3
+        if: failure() && steps.get-pod-logs.outcome == 'success'
+        with:
+          name: ${{ matrix.name }}-pod-logs
+          path: recipe-tests/pod-logs/${{ matrix.name }}
+          retention-days: 30
+          if-no-files-found: error
   
