@@ -124,9 +124,11 @@ jobs:
       - name: Build Magpie image
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         run: |
-          docker build -t magpie .
-          docker tag magpie:latest localhost:51351/magpie:latest
-          docker push localhost:51351/magpie:latest
+          pushd tests/magpiego
+          docker build -t magpiego .
+          docker tag magpiego:latest localhost:51351/magpiego:latest
+          docker push localhost:51351/magpiego:latest
+          popd
       - name: Running local-dev recipe Tests
         if: steps.gen-id.outputs.RUN_TEST == 'false'
         run: |
