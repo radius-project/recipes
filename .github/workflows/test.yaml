@@ -27,41 +27,41 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # - name: mongodatabases
-          #   app: dsrp-resources-mongodb-recipe
-          #   namespace: dsrp-resources-mongodb-recipe-app
-          #   path: ./tests/mongodatabases.bicep
-          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
-          # - name: sqldatabases
-          #   app: dsrp-resources-sqldb-recipe
-          #   namespace: dsrp-resources-sqldb-recipe-app
-          #   path: ./tests/sqldatabases.bicep
-          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
-          # - name: rediscaches
-          #   app: dsrp-resources-redis-recipe
-          #   namespace: dsrp-resources-redis-recipe-app
-          #   path: ./tests/rediscaches.bicep
-          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          - name: mongodatabases
+            app: dsrp-resources-mongodb-recipe
+            namespace: dsrp-resources-mongodb-recipe-app
+            path: ./tests/mongodatabases.bicep
+            args: --parameters magpieimage="reciperegistry:5000/magpiego:latest"
+          - name: sqldatabases
+            app: dsrp-resources-sqldb-recipe
+            namespace: dsrp-resources-sqldb-recipe-app
+            path: ./tests/sqldatabases.bicep
+            args: --parameters magpieimage="reciperegistry:5000/magpiego:latest"
+          - name: rediscaches
+            app: dsrp-resources-redis-recipe
+            namespace: dsrp-resources-redis-recipe-app
+            path: ./tests/rediscaches.bicep
+            args: --parameters magpieimage="reciperegistry:5000/magpiego:latest"
           - name: rabbitmqqueues
             app: msgrp-resources-rabbitmq-recipe
             namespace: msgrp-resources-rabbitmq-default-recipe-app
             path: ./tests/rabbitmqqueues.bicep
             args: --parameters magpieimage="reciperegistry:5000/magpiego:latest"
-          # - name: secretstores
-          #   app: daprrp-rs-secretstore-recipe
-          #   namespace: daprrp-rs-secretstore-recipe
-          #   path: ./tests/secretstores.bicep
-          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
-          # - name: statestores
-          #   app: daprrp-rs-sts-recipe
-          #   namespace: daprrp-rs-sts-recipe
-          #   path: ./tests/statestores.bicep
-          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
-          # - name: pubsubbrokers
-          #   app: dpsb-recipe-app
-          #   namespace: dpsb-recipe-app
-          #   path: ./tests/pubsubbrokers.bicep
-          #   args: --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
+          - name: secretstores
+            app: daprrp-rs-secretstore-recipe
+            namespace: daprrp-rs-secretstore-recipe
+            path: ./tests/secretstores.bicep
+            args: --parameters magpieimage="reciperegistry:5000/magpiego:latest"
+          - name: statestores
+            app: daprrp-rs-sts-recipe
+            namespace: daprrp-rs-sts-recipe
+            path: ./tests/statestores.bicep
+            args: --parameters magpieimage="reciperegistry:5000/magpiego:latest"
+          - name: pubsubbrokers
+            app: dpsb-recipe-app
+            namespace: dpsb-recipe-app
+            path: ./tests/pubsubbrokers.bicep
+            args: --parameters magpieimage="reciperegistry:5000/magpiego:latest"
 
     steps:
       - name: Generate output variables
