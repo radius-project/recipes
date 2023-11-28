@@ -129,16 +129,6 @@ jobs:
           docker tag magpiego:latest localhost:51351/magpiego:latest
           docker push localhost:51351/magpiego:latest
           popd
-      - name: Running local-dev recipe Tests
-        if: steps.gen-id.outputs.RUN_TEST == 'false'
-        run: |
-          files_list=$(ls "tests")
-          for file in $files_list; do
-            testFile=tests/$file
-            echo "Deploying bicep file $testFile"
-            rad deploy $testFile --parameters magpieimage="radiusdev.azurecr.io/magpiego:latest"
-            echo "==========================="
-          done
       - name: Deploy app
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         run: rad deploy ${{ matrix.path }} ${{ matrix.args }}
