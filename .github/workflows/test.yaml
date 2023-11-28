@@ -149,7 +149,7 @@ jobs:
           label="radapp.io/application=${{ matrix.app }}"
           pod_names=($(kubectl get pods -l $label -n ${{ matrix.namespace }} -o jsonpath='{.items[*].metadata.name}'))
           for pod_name in "${pod_names[@]}"; do
-            kubectl logs $pod_name -n $namespace > recipe-tests/pod-logs/${{ matrix.name }}/${pod_name}.txt
+            kubectl logs $pod_name -n ${{ matrix.namespace }} > recipe-tests/pod-logs/${{ matrix.name }}/${pod_name}.txt
           done
           echo "Pod logs saved to recipe-tests/pod-logs/${{ matrix.name }}/"
           # Get kubernetes events and save to file
