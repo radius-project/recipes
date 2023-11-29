@@ -85,8 +85,8 @@ jobs:
           rad env switch default
       - name: Deploy app
         if: steps.gen-id.outputs.RUN_TEST == 'true'
-        id: deploy-app --parameters magpieimage="ghcr.io/radius-project/magpiego:latest"
-        run: rad deploy ./tests/test-local-dev-recipes.bicep 
+        id: deploy-app
+        run: rad deploy ./tests/test-local-dev-recipes.bicep --parameters magpieimage="ghcr.io/radius-project/magpiego:latest"
       - name: Wait for all pods to be ready
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         id: wait-for-pods
