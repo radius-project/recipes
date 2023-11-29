@@ -115,8 +115,6 @@ resource webapp 'Applications.Core/containers@2023-10-01-preview' = {
     container: {
       image: magpieimage
       env: {
-        MONGODBCONNECTION: recipedb.connectionString()
-        REDISDBCONNECTION: redis.connectionString()
         CONNECTION_SQL_CONNECTIONSTRING: db.connectionString()
       }
       readinessProbe:{

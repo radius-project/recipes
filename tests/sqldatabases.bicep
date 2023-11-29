@@ -55,9 +55,6 @@ resource webapp 'Applications.Core/containers@2023-10-01-preview' = {
     }
     container: {
       image: magpieImage
-      env: {
-        CONNECTION_SQL_CONNECTIONSTRING: db.connectionString()
-      }
       readinessProbe: {
         kind: 'httpGet'
         containerPort: magpiePort
