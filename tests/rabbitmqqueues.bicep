@@ -67,7 +67,6 @@ resource webapp 'Applications.Core/containers@2023-10-01-preview' = {
 
 resource rabbitmq 'Applications.Messaging/rabbitMQQueues@2023-10-01-preview' = {
   name: 'rmq-recipe-resource'
-  location: location
   properties: {
     application: app.id
     environment: env.id

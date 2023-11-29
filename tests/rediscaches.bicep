@@ -46,7 +46,7 @@ resource webapp 'Applications.Core/containers@2023-10-01-preview' = {
     container: {
       image: magpieimage
       env: {
-        DBCONNECTION: redis.connectionString()
+        REDISDBCONNECTION: redis.connectionString()
       }
       readinessProbe:{
         kind: 'httpGet'

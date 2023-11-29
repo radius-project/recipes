@@ -62,6 +62,11 @@ jobs:
             namespace: dpsb-recipe-app
             path: ./tests/pubsubbrokers.bicep
             args: --parameters magpieimage="ghcr.io/radius-project/magpiego:latest"
+          - name: test-local-dev-recipes
+            app: local-dev-recipe-app
+            namespace: local-dev-recipe-app
+            path: ./tests/test-local-dev-recipes.bicep
+            args: --parameters magpieimage="ghcr.io/radius-project/magpiego:latest"
 
     steps:
       - name: Generate output variables
