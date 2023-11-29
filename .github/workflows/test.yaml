@@ -126,14 +126,6 @@ jobs:
           rad group switch default
           rad env create default
           rad env switch default
-      - name: Build Magpie image
-        if: steps.gen-id.outputs.RUN_TEST == 'true'
-        run: |
-          pushd tests/magpiego
-          docker build -t magpiego .
-          docker tag magpiego:latest localhost:51351/magpiego:latest
-          docker push localhost:51351/magpiego:latest
-          popd
       - name: Deploy app
         if: steps.gen-id.outputs.RUN_TEST == 'true'
         id: deploy-app
