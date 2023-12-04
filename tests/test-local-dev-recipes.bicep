@@ -2,6 +2,10 @@ import radius as radius
 
 param magpieimage string
 
+param registry string 
+
+param version string
+
 import kubernetes as kubernetes {
   namespace: 'daprrp-rs-secretstore-recipe'
   kubeConfig: ''
@@ -21,49 +25,49 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
         mongoazure: {
           templateKind: 'bicep'
           plainHTTP: true
-          templatePath: 'reciperegistry:5000/recipes/local-dev/mongodatabases:latest'
+          templatePath: '${registry}/recipes/local-dev/mongodatabases:${version}'
         }
       }
       'Applications.Dapr/pubSubBrokers': {
         default: {
           templateKind: 'bicep'
           plainHTTP: true
-          templatePath: 'reciperegistry:5000/recipes/local-dev/pubsubbrokers:latest'
+          templatePath: '${registry}/recipes/local-dev/pubsubbrokers:${version}'
         }
       }
       'Applications.Messaging/rabbitMQQueues': {
         default: {
           templateKind: 'bicep'
           plainHTTP: true
-          templatePath: 'reciperegistry:5000/recipes/local-dev/rabbitmqqueues:latest'
+          templatePath: '${registry}/recipes/local-dev/rabbitmqqueues:${version}'
         }
       }
       'Applications.Datastores/redisCaches':{
         default: {
           templateKind: 'bicep'
           plainHTTP: true
-          templatePath: 'reciperegistry:5000/recipes/local-dev/rediscaches:latest'
+          templatePath: '${registry}/recipes/local-dev/rediscaches:${version}'
         }
       }
       'Applications.Dapr/secretStores': {
         default: {
           templateKind: 'bicep'
           plainHTTP: true
-          templatePath: 'reciperegistry:5000/recipes/local-dev/secretstores:latest'
+          templatePath: '${registry}/recipes/local-dev/secretstores:${version}'
         }
       }
       'Applications.Datastores/sqlDatabases': {
         default: {
           templateKind: 'bicep'
           plainHTTP: true
-          templatePath: 'reciperegistry:5000/recipes/local-dev/sqldatabases:latest'
+          templatePath: '${registry}/recipes/local-dev/sqldatabases:${version}'
         }
       }
       'Applications.Dapr/stateStores': {
         default: {
           templateKind: 'bicep'
           plainHTTP: true
-          templatePath: 'reciperegistry:5000/recipes/local-dev/statestores:latest'
+          templatePath: '${registry}/recipes/local-dev/statestores:${version}'
         }
       }
     }
