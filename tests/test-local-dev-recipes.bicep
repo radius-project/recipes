@@ -109,6 +109,10 @@ resource webapp 'Applications.Core/containers@2023-10-01-preview' = {
       daprsecretstore: {
         source: secretstore.id
       }
+      sql: {
+        source: db.id
+        disableDefaultEnvVars: true
+      }
       daprstatestore: {
         source: statestore.id
       }
@@ -181,6 +185,14 @@ resource mysecret 'core/Secret@v1' = {
   }
   type: 'opaque'
   data: {}
+}
+
+resource db 'Applications.Datastores/sqlDatabases@2023-10-01-preview' = {
+  name: 'sql-db-recipe'
+  properties: {
+    application: app.id
+    environment: env.id
+  }
 }
 
 resource statestore 'Applications.Dapr/stateStores@2023-10-01-preview' = {
