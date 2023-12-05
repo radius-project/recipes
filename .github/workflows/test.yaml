@@ -76,7 +76,7 @@ jobs:
         id: wait-for-pods
         run: |
           label="radapp.io/application=${APP_NAME}"
-          kubectl wait --for=condition=Ready pod -l $label -n ${APP_NAMESPACE} --timeout=5m
+          kubectl rollout status deployment -l $label -n ${APP_NAMESPACE} --timeout=90s
       - name: Get Pod logs for failed tests
         id: get-pod-logs
         if: failure() && (steps.deploy-app.outcome == 'failure' || steps.wait-for-pods.outcome == 'failure')
