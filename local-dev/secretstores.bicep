@@ -47,6 +47,5 @@ output result object = {
     type: daprType
     version: daprVersion
     metadata: daprComponent.spec.metadata
-    componentName: daprComponent.metadata.name
   }
 }

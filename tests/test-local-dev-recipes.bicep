@@ -1,9 +1,12 @@
 import radius as radius
 
+@description('Specifies the image for the container resource.')
 param magpieimage string
 
+@description('The OCI registry for test Bicep recipes.')
 param registry string 
 
+@description('The OCI tag for test Bicep recipes.')
 param version string
 
 import kubernetes as kubernetes {
