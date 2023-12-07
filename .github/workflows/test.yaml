@@ -1,0 +1,102 @@
+name: Test Recipes
+
+on:
+  workflow_dispatch:
+      inputs:
+        version:
+          description: 'Radius version number to use (e.g. 0.1.0, 0.1.0-rc1, edge). Defaults to edge.'
+          required: false
+          default: 'edge'
+          type: string
+  push:
+    branches:
+      - v*.*
+      - edge
+    paths:
+      - "local-dev/**"
+      - ".github/workflows/**"
+  pull_request:
+    types: [opened, synchronize, reopened]
+env:
+  RUN_IDENTIFIER: recipestest-${{ github.run_id }}-${{ github.run_attempt }}
+  APP_NAME: local-dev-recipe-app
+  APP_NAMESPACE: local-dev-recipe-app
+jobs:
+  test:
+    name: "Recipe tests"
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Generate output variables
+        id: gen-id
+        run: |
+          # Set output variables to be used in the other jobs
+          echo "RUN_IDENTIFIER=${RUN_IDENTIFIER}" >> $GITHUB_OUTPUT
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Download k3d
+        run: wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+      - name: Create k3d cluster
+        run: k3d cluster create --agents 2 -p "80:80@loadbalancer" --k3s-arg "--disable=traefik@server:0" --registry-create reciperegistry:51351
+      - name: Install Dapr
+        run: |
+          helm repo add dapr https://dapr.github.io/helm-charts/
+          helm install dapr dapr/dapr --version=1.12 --namespace dapr-system --create-namespace --wait
+      - name: Download rad CLI
+        run: |
+          RADIUS_VERSION="${{ inputs.version }}"
+          if [[ -z "${{ inputs.version }}" ]]; then
+              RADIUS_VERSION=edge
+          fi
+          chmod +x ./.github/scripts/install-radius.sh
+          ./.github/scripts/install-radius.sh $RADIUS_VERSION
+      - name: Publish Recipes
+        run: |
+          files_list=$(ls "local-dev")
+          for file in $files_list; do
+            echo "Publishing recipe: local-dev/$file"
+            recipeName="${file%.*}"
+            rad bicep publish --file local-dev/$file --target br:localhost:51351/recipes/local-dev/$recipeName:latest --plain-http
+          done
+      - name: Initialize default environment
+        run: |
+          rad install kubernetes --set rp.publicEndpointOverride=localhost
+          rad group create default
+          rad workspace create kubernetes default --group default
+          rad group switch default
+          rad env create default
+          rad env switch default
+      - name: Deploy app
+        id: deploy-app
+        run: rad deploy ./tests/test-local-dev-recipes.bicep --parameters magpieimage="ghcr.io/radius-project/magpiego:latest" --parameters registry="reciperegistry:5000" --parameters version="latest"
+      - name: Wait for all pods to be ready
+        id: wait-for-pods
+        run: |
+          label="radapp.io/application=${APP_NAME}"
+          kubectl rollout status deployment -l $label -n ${APP_NAMESPACE} --timeout=90s
+      - name: Get Pod logs for failed tests
+        id: get-pod-logs
+        if: failure() && (steps.deploy-app.outcome == 'failure' || steps.wait-for-pods.outcome == 'failure')
+        run: |
+          # Create pod-logs directory
+          mkdir -p recipe-tests/pod-logs/local_dev_recipe_test_container_logs
+          # Get pod logs and save to file
+          label="radapp.io/application=${APP_NAME}"
+          pod_names=($(kubectl get pods -l $label -n ${APP_NAMESPACE} -o jsonpath='{.items[*].metadata.name}'))
+          for pod_name in "${pod_names[@]}"; do
+            kubectl logs $pod_name -n ${APP_NAMESPACE} > recipe-tests/pod-logs/local_dev_recipe_test_container_logs/${pod_name}.txt
+          done
+          echo "Pod logs saved to recipe-tests/pod-logs/local_dev_recipe_test_container_logs/"
+          # Get kubernetes events and save to file
+          kubectl get events -n ${APP_NAMESPACE} > recipe-tests/pod-logs/local_dev_recipe_test_container_logs/events.txt
+      - name: Upload Pod logs for failed tests
+        uses: actions/upload-artifact@v3
+        if: failure() && steps.get-pod-logs.outcome == 'success'
+        with:
+          name: local_dev_recipe_test_container_logs-pod-logs
+          path: recipe-tests/pod-logs/local_dev_recipe_test_container_logs
+          retention-days: 30
+          if-no-files-found: error
