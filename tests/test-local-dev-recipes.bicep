@@ -27,49 +27,49 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
       'Applications.Datastores/mongoDatabases':{
         mongoazure: {
           templateKind: 'bicep'
-          plainHTTP: true
+          plainHttp: true
           templatePath: '${registry}/recipes/local-dev/mongodatabases:${version}'
         }
       }
       'Applications.Dapr/pubSubBrokers': {
         default: {
           templateKind: 'bicep'
-          plainHTTP: true
+          plainHttp: true
           templatePath: '${registry}/recipes/local-dev/pubsubbrokers:${version}'
         }
       }
       'Applications.Messaging/rabbitMQQueues': {
         default: {
           templateKind: 'bicep'
-          plainHTTP: true
+          plainHttp: true
           templatePath: '${registry}/recipes/local-dev/rabbitmqqueues:${version}'
         }
       }
       'Applications.Datastores/redisCaches':{
         default: {
           templateKind: 'bicep'
-          plainHTTP: true
+          plainHttp: true
           templatePath: '${registry}/recipes/local-dev/rediscaches:${version}'
         }
       }
       'Applications.Dapr/secretStores': {
         default: {
           templateKind: 'bicep'
-          plainHTTP: true
+          plainHttp: true
           templatePath: '${registry}/recipes/local-dev/secretstores:${version}'
         }
       }
       'Applications.Datastores/sqlDatabases': {
         default: {
           templateKind: 'bicep'
-          plainHTTP: true
+          plainHttp: true
           templatePath: '${registry}/recipes/local-dev/sqldatabases:${version}'
         }
       }
       'Applications.Dapr/stateStores': {
         default: {
           templateKind: 'bicep'
-          plainHTTP: true
+          plainHttp: true
           templatePath: '${registry}/recipes/local-dev/statestores:${version}'
         }
       }
