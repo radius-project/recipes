@@ -50,8 +50,8 @@ param allocatedStorage string = '20'
 @description('Database license model')
 param licenseModel string = 'license-included'
 
-@description('The number of days for which automated backups are retained. Setting this parameter to a positive number enables backups. Defaults to 0.')
-param backupRetentionPeriod int = 0
+@description('The number of days for which automated backups are retained. Setting this parameter to a positive number enables backups. Defaults to 1.')
+param backupRetentionPeriod int = 1
 
 @description('Database port')
 param port int = 1433
