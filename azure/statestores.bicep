@@ -23,6 +23,9 @@ param location string = resourceGroup().location
 @description('Sets this Dapr State Store as the actor state store. Only one Dapr State Store can be set as the actor state store. Defaults to false.')
 param actorStateStore bool = false
 
+@description('The name of the container to create within the Azure storage account and to reference within the Dapr component.')
+var containerName = context.resource.name
+
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: 'recipe${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
@@ -35,7 +38,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
     name: 'default'
 
     resource container 'containers' = {
-      name: context.resource.name
+      name: containerName
     }
   }
 }
@@ -67,7 +70,7 @@ resource daprComponent 'dapr.io/Component@v1alpha1' = {
       }
       {
         name: 'containerName'
-        value: storageAccount::blob::container.name
+        value: containerName
       }
       {
         name: 'actorStateStore'
