@@ -46,11 +46,19 @@ param skuName string = 'Standard'
 ])
 param skuTier string = 'Standard'
 
+@description('The tags that will be applied to the resource')
+param tags object = {
+  'radapp.io/environment': context.environment.id
+  'radapp.io/application': context.application.id
+  'radapp.io/resource': context.resource.id
+}
+
 var mssqlPort = 1433
 
 resource mssql 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: '${context.resource.name}-${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
+  tags: tags
   properties: {
     administratorLogin: adminLogin
     administratorLoginPassword: adminPassword
@@ -67,6 +75,7 @@ resource mssql 'Microsoft.Sql/servers@2021-02-01-preview' = {
   resource db 'databases' = {
     name: database
     location: location
+    tags: tags
     sku: {
       name: skuName
       tier: skuTier

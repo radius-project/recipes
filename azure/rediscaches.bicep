@@ -40,9 +40,17 @@ param skuFamily string = 'C'
 ])
 param skuName string = 'Basic'
 
+@description('The tags that will be applied to the resource')
+param tags object = {
+  'radapp.io/environment': context.environment.id
+  'radapp.io/application': context.application.id
+  'radapp.io/resource': context.resource.id
+}
+
 resource azureCache 'Microsoft.Cache/redis@2022-06-01' = {
   name: 'cache-${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
+  tags: tags
   properties: {
     sku: {
       capacity: skuCapacity
