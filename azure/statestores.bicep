@@ -26,17 +26,20 @@ param actorStateStore bool = false
 @description('The name of the container to create within the Azure storage account and to reference within the Dapr component.')
 var containerName = context.resource.name
 
-@description('The tags that will be applied to the resource')
-param tags object = {
+@description('The user-defined tags that will be applied to the resource. Default is null')
+param tags object = {}
+
+@description('The Radius specific tags that will be applied to the resource')
+var radiusTags = {
   'radapp.io/environment': context.environment.id
-  'radapp.io/application': context.application.id
+  'radapp.io/application': context.application == null ? '' : context.application.id
   'radapp.io/resource': context.resource.id
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: 'recipe${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
-  tags: tags
+  tags: union(tags, radiusTags)
   sku: {
     name: 'Standard_ZRS'
   }
