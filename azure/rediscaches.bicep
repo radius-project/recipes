@@ -45,9 +45,9 @@ param tags object = {}
 
 @description('The Radius specific tags that will be applied to the resource')
 var radiusTags = {
-  'radapp.io/environment': context.environment.id
-  'radapp.io/application': context.application == null ? '' : context.application.id
-  'radapp.io/resource': context.resource.id
+  'radapp.io-environment': context.environment.id
+  'radapp.io-application': context.application == null ? '' : context.application.id
+  'radapp.io-resource': context.resource.id
 }
 
 resource azureCache 'Microsoft.Cache/redis@2022-06-01' = {
