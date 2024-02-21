@@ -53,7 +53,7 @@ To use a community recipe from this repo, simply use [`rad recipe register`](htt
 
 ## How to contribute recipes
 
-Visit the [contributions guide](/contributing) to learn how to write your own recipes and contribute to the community.
+Visit the [contributions guide](CONTRIBUTING.md) to learn how to write your own recipes and contribute to the community.
 
 ## Code of Conduct
 
