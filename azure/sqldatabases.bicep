@@ -46,11 +46,22 @@ param skuName string = 'Standard'
 ])
 param skuTier string = 'Standard'
 
+@description('The user-defined tags that will be applied to the resource. Default is null')
+param tags object = {}
+
+@description('The Radius specific tags that will be applied to the resource')
+var radiusTags = {
+  'radapp.io-environment': context.environment.id
+  'radapp.io-application': context.application == null ? '' : context.application.id
+  'radapp.io-resource': context.resource.id
+}
+
 var mssqlPort = 1433
 
 resource mssql 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: '${context.resource.name}-${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
+  tags: union(tags, radiusTags)
   properties: {
     administratorLogin: adminLogin
     administratorLoginPassword: adminPassword
@@ -67,6 +78,7 @@ resource mssql 'Microsoft.Sql/servers@2021-02-01-preview' = {
   resource db 'databases' = {
     name: database
     location: location
+    tags: union(tags, radiusTags)
     sku: {
       name: skuName
       tier: skuTier
