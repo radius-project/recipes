@@ -10,7 +10,7 @@ This document provides the guidelines for how to contribute to the recipes repos
 
 ## Table of Contents
 
- - [Contributing to Radius Recipes](docs/contributing /contributing-recipes.md) : This guide provides an overview of how to write your own recipes and contribute to the community.
+ - [Contributing to Radius Recipes](docs/contributing/contributing-recipes.md) : This guide provides an overview of how to write your own recipes and contribute to the community.
  - [Contributing Issues](docs/contributing/contributing-issues.md) : This guide provides an overview of how to contribute issues to the Recipes.
 
 ## Thank You!
