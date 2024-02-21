@@ -40,9 +40,20 @@ param skuFamily string = 'C'
 ])
 param skuName string = 'Basic'
 
+@description('The user-defined tags that will be applied to the resource. Default is null')
+param tags object = {}
+
+@description('The Radius specific tags that will be applied to the resource')
+var radiusTags = {
+  'radapp.io-environment': context.environment.id
+  'radapp.io-application': context.application == null ? '' : context.application.id
+  'radapp.io-resource': context.resource.id
+}
+
 resource azureCache 'Microsoft.Cache/redis@2022-06-01' = {
   name: 'cache-${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
+  tags: union(tags, radiusTags)
   properties: {
     sku: {
       capacity: skuCapacity

@@ -48,9 +48,20 @@ param skuTier string = 'Standard'
 @description('ISO 8601 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.')
 param defaultMessageTimeToLive string = 'P14D'
 
+@description('The user-defined tags that will be applied to the resource. Default is null')
+param tags object = {}
+
+@description('The Radius specific tags that will be applied to the resource')
+var radiusTags = {
+  'radapp.io-environment': context.environment.id
+  'radapp.io-application': context.application == null ? '' : context.application.id
+  'radapp.io-resource': context.resource.id
+}
+
 resource servicebus 'Microsoft.ServiceBus/namespaces@2021-06-01-preview' = {
   name: 'servicebus-namespace-${uniqueString(context.resource.id, resourceGroup().id)}'
   location: location
+  tags: union(radiusTags, tags)
   sku: {
     name: skuName
     tier: skuTier
