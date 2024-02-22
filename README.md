@@ -10,14 +10,14 @@ Recipes provide self-service infrastructure provisioning for developers. Develop
 
 Recipes currently support the following resources:
 
-  - Applications.Datastores/redisCaches
-  - Applications.Datastores/mongoDatabases
-  - Applications.Datastores/sqlDatabases
-  - Applications.Messaging/rabbitmqQueues
-  - Applications.Dapr/stateStores
-  - Applications.Dapr/pubSubBrokers
-  - Applications.Dapr/secretStores
-  - Applications.Core/extenders
+  - [Applications.Datastores/redisCaches](https://docs.radapp.io/reference/resource-schema/cache/redis/)
+  - [Applications.Datastores/mongoDatabases](https://docs.radapp.io/reference/resource-schema/databases/mongodb/)
+  - [Applications.Datastores/sqlDatabases](https://docs.radapp.io/reference/resource-schema/databases/microsoft-sql/)
+  - [Applications.Messaging/rabbitmqQueues](https://docs.radapp.io/reference/resource-schema/messaging/rabbitmq/)
+  - [Applications.Dapr/stateStores](https://docs.radapp.io/reference/resource-schema/dapr-schema/statestore/)
+  - [Applications.Dapr/pubSubBrokers](https://docs.radapp.io/reference/resource-schema/dapr-schema/pubsub/)
+  - [Applications.Dapr/secretStores](https://docs.radapp.io/reference/resource-schema/dapr-schema/secretstore/)
+  - [Applications.Core/extenders](https://docs.radapp.io/reference/resource-schema/core-schema/extender/)
 
 ## Supported Cloud Providers
 
@@ -51,9 +51,42 @@ Patched versions of Recipes are tagged with the patch number, e.g. `0.21.1`. Whe
 
 To use a community recipe from this repo, simply use [`rad recipe register`](https://docs.radapp.io/reference/cli/rad_recipe_register) with the Recipe's template path, or update your environment's Bicep definition with the Recipe:
 
-## How to contribute recipes
+### CLI
 
-Visit the [contributions guide](CONTRIBUTING.md) to learn how to write your own recipes and contribute to the community.
+```bash
+rad recipe register azure \
+  --environment myenv \
+  --template-kind bicep \ 
+  --template-path "ghcr.io/radius-project/recipes/azure/rediscaches:TAG" \
+  --resource-type "Applications.Datastores/redisCaches"
+```
+
+### Bicep
+
+```bicep
+import radius as rad
+
+resource myenv 'Applications.Core/environments' = {
+  name: 'myenv'
+  properties: {
+    compute: {...}
+    recipes: {
+      'Applications.Core/redisCaches': {
+        'azure': {
+          template-kind: 'bicep'
+          template-path: 'ghcr.io/radius-project/recipes/azure/rediscaches:0.21'
+        }
+      }
+    }
+  }
+}
+```
+
+For more information on using Recipes refer to the [Radius docs](https://docs.radapp.io/guides/recipes/overview/).
+
+## How to Contribute to Recipes
+
+Visit the [contributions guide](CONTRIBUTING.md) to learn how to write your own Recipes and contribute to the community.
 
 ## Code of Conduct
 
