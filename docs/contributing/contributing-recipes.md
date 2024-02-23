@@ -31,17 +31,17 @@ To test the recipe locally, follow the steps below:
 1. Register the recipe in your environment using the `rad recipe register` command
     
     ```bash
-    # Bicep
+    # **Bicep recipe via rad CLI**
     rad recipe register myrecipe --environment myenv --resource-type Applications.Datastores/redisCaches --template-kind bicep --template-path ghcr.io/USERNAME/recipes/myrecipe:1.1.0
     ```
 
     ```bash
-    # Terraform
+    # **Terraform recipe via rad CLI**
     rad recipe register myrecipe --environment myenv --resource-type Applications.Datastores/redisCaches --template-kind terraform --template-path user/recipes/myrecipe --template-version "1.1.0"
     ```
 
     ```bicep
-    # Bicep environment
+    # **Bicep environment**
     import radius as radius
     resource env 'Applications.Core/environments@2023-10-01-preview' = {
         name: 'prod'
