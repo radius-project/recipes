@@ -75,7 +75,7 @@ To test the recipe locally, follow the steps below:
         }
     }
     ```
-    
+
 1. Use the recipe in your application and verify that it works as expected
     ```bicep
     resource redis 'Applications.Datastores/redisCaches@2023-10-01-preview'= {
