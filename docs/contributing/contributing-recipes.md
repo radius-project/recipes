@@ -20,7 +20,7 @@ To write your first recipe, follow the steps below:
 To test the recipe locally, follow the steps below:
 
 1. Publish the recipe to a Registry
-    Recipes leverage [Bicep registries](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry) for template storage. Once you've authored a Recipe, you can publish it to your preferred OCI-compliant registry with [`rad bicep publish`]({{< ref rad_bicep_publish >}}):
+    Recipes leverage [Bicep registries](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry) for template storage. Once you've authored a Recipe, you can publish it to your preferred OCI-compliant registry with [`rad bicep publish`](https://docs.radapp.io/reference/cli/rad_bicep_publish/).:
 
     ```bash
     rad bicep publish --file myrecipe.bicep --target br:ghcr.io/USERNAME/recipes/myrecipe:1.1.0
@@ -29,19 +29,19 @@ To test the recipe locally, follow the steps below:
     Follow the [Terraform module publishing docs](https://developer.hashicorp.com/terraform/registry/modules/publish) to setup and publish a Terraform module to a Terraform registry.
 
 1. Register the recipe in your environment using the `rad recipe register` command
+
     **Bicep Recipe via rad CLI**
     ```bash
-    # **Bicep recipe via rad CLI**
     rad recipe register myrecipe --environment myenv --resource-type Applications.Datastores/redisCaches --template-kind bicep --template-path ghcr.io/USERNAME/recipes/myrecipe:1.1.0
     ```
 
+    **Terraform recipe via rad CLI**
     ```bash
-    # **Terraform recipe via rad CLI**
     rad recipe register myrecipe --environment myenv --resource-type Applications.Datastores/redisCaches --template-kind terraform --template-path user/recipes/myrecipe --template-version "1.1.0"
     ```
 
+    **Bicep environment**
     ```bicep
-    # **Bicep environment**
     import radius as radius
     resource env 'Applications.Core/environments@2023-10-01-preview' = {
         name: 'prod'
@@ -75,6 +75,7 @@ To test the recipe locally, follow the steps below:
         }
     }
     ```
+    
 1. Use the recipe in your application and verify that it works as expected
     ```bicep
     resource redis 'Applications.Datastores/redisCaches@2023-10-01-preview'= {
