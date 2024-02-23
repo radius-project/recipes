@@ -29,7 +29,7 @@ To test the recipe locally, follow the steps below:
     Follow the [Terraform module publishing docs](https://developer.hashicorp.com/terraform/registry/modules/publish) to setup and publish a Terraform module to a Terraform registry.
 
 1. Register the recipe in your environment using the `rad recipe register` command
-    
+    **Bicep Recipe via rad CLI**
     ```bash
     # **Bicep recipe via rad CLI**
     rad recipe register myrecipe --environment myenv --resource-type Applications.Datastores/redisCaches --template-kind bicep --template-path ghcr.io/USERNAME/recipes/myrecipe:1.1.0
