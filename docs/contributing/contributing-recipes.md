@@ -107,7 +107,7 @@ After you have tested the recipe in an application, you can follow the steps bel
 
 1. Make sure there's an issue (bug or feature) raised, which sets the expectations for the contribution you are about to make.
 1. Fork the repository and create a new branch
-1. Add the recipe to the relevant directory following the [repository structure](./recipes/README.MD#repository-structure)
+1. Add the recipe to the relevant directory following the [repository structure](../../README.MD#repository-structure)
 1. Update the README.md with the new recipe
 1. Commit and open a PR
 1. Wait for the CI process to finish and make sure all checks are green
