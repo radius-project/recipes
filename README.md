@@ -4,30 +4,7 @@ This repository contains commonly used [Recipe](https://docs.radapp.io/recipes) 
 
 ## Recipes
 
-Recipes provide self-service infrastructure provisioning for developers. Developers select the resource(s) they need, and operators can configure Recipes with secure, approved, infrastructure.
-
-## Supported Resources types
-
-Recipes currently support the following resources:
-
-  - [Applications.Datastores/redisCaches](https://docs.radapp.io/reference/resource-schema/cache/redis/)
-  - [Applications.Datastores/mongoDatabases](https://docs.radapp.io/reference/resource-schema/databases/mongodb/)
-  - [Applications.Datastores/sqlDatabases](https://docs.radapp.io/reference/resource-schema/databases/microsoft-sql/)
-  - [Applications.Messaging/rabbitmqQueues](https://docs.radapp.io/reference/resource-schema/messaging/rabbitmq/)
-  - [Applications.Dapr/stateStores](https://docs.radapp.io/reference/resource-schema/dapr-schema/statestore/)
-  - [Applications.Dapr/pubSubBrokers](https://docs.radapp.io/reference/resource-schema/dapr-schema/pubsub/)
-  - [Applications.Dapr/secretStores](https://docs.radapp.io/reference/resource-schema/dapr-schema/secretstore/)
-  - [Applications.Core/extenders](https://docs.radapp.io/reference/resource-schema/core-schema/extender/)
-
-## Supported Cloud Providers
-
-  - Azure
-  - AWS
-
-## Supported IaC Languages
-
-  - Bicep
-  - Terraform
+Recipes provide self-service infrastructure provisioning for developers. Developers select the resource(s) they need, and operators can configure Recipes with secure, approved, infrastructure. For more information about the supported resource types and the IaC languages, please refer to the [Recipes overview](https://docs.radapp.io/guides/recipes/overview/) page.
 
 ## Available Recipes
 
