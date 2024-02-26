@@ -107,11 +107,7 @@ After you have tested the recipe in an application, you can follow the steps bel
 
 1. Make sure there's an issue (bug or feature) raised, which sets the expectations for the contribution you are about to make.
 1. Fork the repository and create a new branch
-1. Add the recipe to the relevant directory
-    1. If the recipe is for local dev, add the recipe to the `local-dev` directory
-    1. If the recipe is for Azure, add the recipe to the `azure` directory
-    1. If the recipe is for AWS, add the recipe to the `aws` directory
-    1. If its a terraform recipe, create a directory name `<resourcetype>` under the relevant environment and add the recipe (e.g. `azure/redis/main.tf`) 
+1. Add the recipe to the relevant directory following the [repository structure](./recipes/README.MD#repository-structure)
 1. Update the README.md with the new recipe
 1. Commit and open a PR
 1. Wait for the CI process to finish and make sure all checks are green

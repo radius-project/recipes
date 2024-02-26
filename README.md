@@ -6,7 +6,7 @@ This repository contains commonly used [Recipe](https://docs.radapp.io/recipes) 
 
 Recipes provide self-service infrastructure provisioning for developers. Developers select the resource(s) they need, and operators can configure Recipes with secure, approved, infrastructure. For more information about the supported resource types and the IaC languages, please refer to the [Recipes overview](https://docs.radapp.io/guides/recipes/overview/) page.
 
-## Available Recipes
+## Repository Structure
 
 Recipes in this repository are organized by the environments and the resource types they support. Below is the structure:
 
