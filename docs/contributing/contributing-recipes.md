@@ -21,7 +21,7 @@ To test the recipe locally, follow the steps below:
 
 1. Publish the recipe to a Registry
 
-    For Bicep, Recipes leverage [Bicep registries](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry) for template storage. Once you've authored a Recipe, you can publish it to your preferred OCI-compliant registry with [`rad bicep publish`](https://docs.radapp.io/reference/cli/rad_bicep_publish/).:
+    For Bicep, Recipes leverage [Bicep registries](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry) for template storage. 
 
     - Make sure you have the right permissions to push to the registry. Owner or Contributor    alone won't allow you to push.
 
@@ -31,7 +31,7 @@ To test the recipe locally, follow the steps below:
         az acr login --name <registryname>
         ``` 
 
-    - Publish the recipe to the registry
+    - Once you've authored a Recipe, you can publish it to your preferred OCI-compliant registry with [`rad bicep publish`](https://docs.radapp.io/reference/cli/rad_bicep_publish/).
 
         ```bash
         rad bicep publish --file myrecipe.bicep --target br:<registrypath>/myrecipe:1.1.0
@@ -107,7 +107,7 @@ After you have tested the recipe in an application, you can follow the steps bel
 
 1. Make sure there's an issue (bug or feature) raised, which sets the expectations for the contribution you are about to make.
 1. Fork the repository and create a new branch
-1. Add the recipe to the relevant directory following the [repository structure](../../README.MD#repository-structure)
+1. Add the recipe to the relevant directory following the [repository structure](../../README.md#repository-structure)
 1. Update the README.md with the new recipe
 1. Commit and open a PR
 1. Wait for the CI process to finish and make sure all checks are green
