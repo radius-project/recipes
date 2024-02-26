@@ -22,8 +22,17 @@ To test the recipe locally, follow the steps below:
 1. Publish the recipe to a Registry
     For Bicep, Recipes leverage [Bicep registries](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry) for template storage. Once you've authored a Recipe, you can publish it to your preferred OCI-compliant registry with [`rad bicep publish`](https://docs.radapp.io/reference/cli/rad_bicep_publish/).:
 
+    - Make sure you have the right permissions to push to the registry. Owner or Contributor    alone won't allow you to push.
+    - Make sure to login to your registry before publishing the recipe. Eg:
+
+        ```bash
+        az acr login --name <registryname>
+        ``` 
+
+    - Publish the recipe to the registry
+
     ```bash
-    rad bicep publish --file myrecipe.bicep --target br:ghcr.io/USERNAME/recipes/myrecipe:1.1.0
+    rad bicep publish --file myrecipe.bicep --target br:<registrypath>/myrecipe:1.1.0
     ```
 
     Follow the [Terraform module publishing docs](https://developer.hashicorp.com/terraform/registry/modules/publish) to setup and publish a Terraform module to a Terraform registry.

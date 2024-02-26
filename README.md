@@ -8,7 +8,17 @@ Recipes provide self-service infrastructure provisioning for developers. Develop
 
 ## Available Recipes
 
-  - [Local Dev](/local-dev)
+Recipes in this repository are organized by the environments and the resource types they support. Below is the structure:
+
+        - <environment> eg : aws
+          - <resourcetype.bicep> eg : rediscaches.bicep
+          - <resourcetype> eg : rediscaches
+             - <main.tf>
+             - <variables.tf>
+
+All the available Recipes can be found in the folders below:
+
+  - [Local Dev](/local-dev) 
   - [Azure](/azure)
   - [AWS](/aws) 
 
