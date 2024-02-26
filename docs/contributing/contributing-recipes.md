@@ -20,7 +20,7 @@ To write your first recipe, follow the steps below:
 To test the recipe locally, follow the steps below:
 
 1. Publish the recipe to a Registry
-    Recipes leverage [Bicep registries](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry) for template storage. Once you've authored a Recipe, you can publish it to your preferred OCI-compliant registry with [`rad bicep publish`](https://docs.radapp.io/reference/cli/rad_bicep_publish/).:
+    For Bicep, Recipes leverage [Bicep registries](https://learn.microsoft.com/azure/azure-resource-manager/bicep/private-module-registry) for template storage. Once you've authored a Recipe, you can publish it to your preferred OCI-compliant registry with [`rad bicep publish`](https://docs.radapp.io/reference/cli/rad_bicep_publish/).:
 
     ```bash
     rad bicep publish --file myrecipe.bicep --target br:ghcr.io/USERNAME/recipes/myrecipe:1.1.0
@@ -40,7 +40,7 @@ To test the recipe locally, follow the steps below:
     rad recipe register myrecipe --environment myenv --resource-type Applications.Datastores/redisCaches --template-kind terraform --template-path user/recipes/myrecipe --template-version "1.1.0"
     ```
 
-    **Bicep environment**
+    **Via Radius environment bicep**
     ```bicep
     import radius as radius
     resource env 'Applications.Core/environments@2023-10-01-preview' = {
