@@ -55,7 +55,7 @@ jobs:
           ./.github/scripts/install-radius.sh $RADIUS_VERSION
       - name: Publish Recipes
         run: |
-          files_list=$(ls "local-dev")
+          files_list=$(ls "local-dev" | grep '\.bicep$')
           for file in $files_list; do
             echo "Publishing recipe: local-dev/$file"
             recipeName="${file%.*}"
