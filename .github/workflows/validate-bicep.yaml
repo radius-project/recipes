@@ -41,7 +41,7 @@ jobs:
       run: python ./.github/scripts/get_release_version.py
     - name: Download rad-bicep
       run: |
-        ./.github/scripts/curl-with-retries.sh https://get.radapp.dev/tools/bicep-extensibility/${{ env.REL_CHANNEL }}/linux-x64/rad-bicep --output rad-bicep
+        oras pull ghcr.io/radius-project/radius/bicep/rad-bicep/linux-x64:latest -o ./
         chmod +x rad-bicep
         ./rad-bicep --version
     - name: Verify Bicep files
