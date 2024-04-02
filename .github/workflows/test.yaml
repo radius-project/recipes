@@ -31,7 +31,37 @@ jobs:
         id: get_installation_token
         with:
           app_id: 864990
-          private_key: SHA256:r/tCjE+4rKYSAT7Y9W39F7C1jZJRXzIyNStwgVO3Mgc=
+          private_key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEogIBAAKCAQEAy+8eW4HB7iiBNTydT7kwEBEOvrWoL6FyPThvtYR8qDAOsKiq
+            6+5NO2oyd1OunpEKOtbrQRIUz4XEcH9fVVRKkBt562g2bbEpgrS8vWB13W2voACz
+            Lc+zo31K5yIrIdNS2bW6vwV4pyb3acbY+vIM1pVh5ckbo/KQfact7CwC3Qd38Z4i
+            pGP2gscBbt7P1RfSK2ozkWNv3ijqeLb3hvSc/2mGsVZUV5MKQPjp0FXLu3s2t3jd
+            bKYf0jhPKdPPJhC6hMwmt4TWKzF33/frrbaHALS2llQX4O5ULhLb74hTMir37Nwl
+            CgZrIAsi6l77zzOOoomfuEUDOyP0XdjZWNsaQQIDAQABAoIBAHJCjGC6x9xXB2W7
+            i2wylvI5jGhfwVbGfwo8B6LNE0bsfh6Osg00XENQ0eu3kBu5qeCjr/WqWsyW5yQc
+            yV42tvwc2OeDYRN+coKQHzt/wyoIHaFpIvsk50JPndr4cvAlxcLDJlmGiD4m//Jc
+            /g9D9Nt5oPss/XaTHk+4jmtHkWcimtv/VPsBlHngfM4vqHsVQsjH+oRl7bp8PUqe
+            Iu7Jn2GXPljY3jPTYH/LR0mExkoG3cSpA1KXvsRjj9lOxoVxx3jVNUnDAXPoV3Ah
+            kBlRu4t7jnwyaYacTxY+LHnA1l4OAh/Rzy1DYLp8dK98xKp9XZwlORRwQnJhBACP
+            2kT5Ve0CgYEA7dAtiC99BeDw2lEVqxhOFY5M7VMxh1n9MdWepbQzUTujFDlzREBs
+            2z0/3Ci2KC1oXsxSyNAvADpnYXJc/V90cMrHnG8r0yYxFx+14JoxFRFUpksfaEXv
+            4ad/dFCue+GIOx4fZ3ibfXKbnQJUwfznvFnKBI1aQtBj5DV40L8d9OsCgYEA24eq
+            wX8q8nn+GMqbrOEAcGBFw9FOIvAKLJZTlzGhnyA5igaOyVzraJZHsLF9BJc/XDhS
+            Zppk6tfLbt8UtmcZzZhhddrxb6077BgsWF/Jpttkpr+WgNEsaHRXsVPdx4Kw6sRu
+            7XF/IgmDBa4iqwy9uiMUo/KU+kBLmjXqXt1a0oMCgYBFWfhtRqwHEtoqUIspIiVj
+            U+RLMX+4IR4dclaZrDtq7SFZvIdI2CDmrq343kaA4P0W6C8cMNoEDwQm/trvaO7k
+            Fb6weBsnsHOQcsbvgQffRPaSqEW4euzBub8JhJ3dsp+v3dD6s8lkhA+tcgiVqdNK
+            skSfnzk7UtpOqulYtuNdkQKBgCZ8HRo40e2aJ0pvUmU3OJ16syBF9B252P7CB7ts
+            rvm3a37f8W4phPdbyQuXwePpI+ll0kQ8cs6csAQqxXXIk0Rwnz1K+aJrSyLzheqk
+            ODSxJ274DUld4hwZsTncCvgr2Bn//7ZOfEwaQMbhJSC5ZhVYiwjGwQkx9k79fq3M
+            vlxDAoGAGEk8fAChfhIg6o9rAouotfRQTM/gaRj2/33dHSBxv2wmmyhf+KXRg7P6
+            qQpkUmZH+0nAOH+Y4+1vzNNPPw9jLfJVzf4SI9ENHviHsAWJ5L9jGcv5RdHtz3EB
+            vXlq5GYlhkQzGCfvqlLIDa1h/0FkzN20+wsaoPM5ZUaFbh2XOTA=
+            -----END RSA PRIVATE KEY-----
+
+          
+
       - name: Generate output variables
         id: gen-id
         run: |
