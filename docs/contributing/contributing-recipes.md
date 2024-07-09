@@ -7,7 +7,7 @@ This section describes the guidelines for contributing code / docs to Radius Rec
 To write your first recipe, follow the steps below:
 
 1. Familiarize yourself with the IaC language of your choice [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep) or [Terraform](https://developer.hashicorp.com/terraform)
-1. Familiarize yourself with the Radius [Recipe](https://docs.radapp.io/recipes) concept
+1. Familiarize yourself with the Radius [Recipe](https://docs.radapp.io/guides/recipes) concept
 1. Familiarize yourself with the [supported resource types](https://docs.radapp.io/guides/recipes/overview/#supported-resources) to write recipes for.
 1. Review the existing recipes in this repository to understand the structure and best practices
 1. Follow this [how-to guide](https://docs.radapp.io/guides/recipes/howto-author-recipes/) to write your first recipe, register your recipe in the environment.
