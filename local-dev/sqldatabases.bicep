@@ -40,10 +40,10 @@ param memoryLimit string = '1024Mi'
 @description('Initial catalog to connect to. Defaults to empty string (no initial catalog).')
 param initialCatalog string = ''
 
-import kubernetes as kubernetes {
+extension kubernetes with {
   kubeConfig: ''
   namespace: context.runtime.kubernetes.namespace
-}
+} as kubernetes
 
 var uniqueName = 'sql-${uniqueString(context.resource.id)}'
 var port = 1433

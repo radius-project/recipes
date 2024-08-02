@@ -26,10 +26,10 @@ param memoryRequest string = '128Mi'
 @description('Memory limit for the redis deployment')
 param memoryLimit string = '1024Mi'
 
-import kubernetes as kubernetes {
+extension kubernetes with {
   kubeConfig: ''
   namespace: context.runtime.kubernetes.namespace
-}
+} as kubernetes
 
 var uniqueName = 'daprpubsub-${uniqueString(context.resource.id)}'
 var port = 6379

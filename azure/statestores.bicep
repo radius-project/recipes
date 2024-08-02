@@ -54,10 +54,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   }
 }
 
-import kubernetes as k8s {
+extension kubernetes with {
   kubeConfig: ''
   namespace: context.runtime.kubernetes.namespace
-}
+} as k8s
 
 var daprType = 'state.azure.blobstorage'
 var daprVersion = 'v1'

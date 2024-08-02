@@ -28,10 +28,10 @@ param username string = 'admin'
 #disable-next-line secure-parameter-default
 param password string = 'Password1234=='
 
-import kubernetes as kubernetes {
+extension kubernetes with {
   kubeConfig: ''
   namespace: context.runtime.kubernetes.namespace
-}
+} as kubernetes
 
 var uniqueName = 'mongo-${uniqueString(context.resource.id)}'
 var port = 27017

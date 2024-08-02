@@ -4,12 +4,15 @@ then
     BICEP_EXECUTABLE="$BICEP_PATH/rad-bicep"
 fi
 
+# The Bicep compiler prints out a warning for any experimental features in use. 
+# We want to ignore these warnings since Radius makes use of some experimental features. 
+WARNING_MSG="WARNING: The following experimental Bicep features"
 FILES=$(find . -type f -name "*.bicep")
 FAILURES=()
 for F in $FILES
 do
     echo "validating $F"
-    # We need to run the rad-bicep and fail in one of two cases:
+    # We need to run rad-bicep and fail in one of two cases:
     # - non-zero exit code
     # - non-empty stderr 
     #
@@ -24,7 +27,7 @@ do
     EXITCODE=$?
     exec 3>&-
     
-    if [[ ! $EXITCODE -eq 0 || ! -z $STDERR ]]
+    if [[ ! $EXITCODE -eq 0 || (! -z $STDERR && ! $STDERR == $WARNING_MSG* && ! $STDERR == *"Error"* ) ]]
     then
         echo $STDERR
         FAILURES+=$F

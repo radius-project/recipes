@@ -51,7 +51,7 @@ rad recipe register azure \
 ### Bicep
 
 ```bicep
-import radius as rad
+extension radius 
 
 resource myenv 'Applications.Core/environments' = {
   name: 'myenv'

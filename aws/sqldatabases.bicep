@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import aws as aws
+extension aws
 
 @description('Radius-provided object containing information about the resource calling the Recipe')
 param context object
