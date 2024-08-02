@@ -4,6 +4,8 @@ then
     BICEP_EXECUTABLE="$BICEP_PATH/rad-bicep"
 fi
 
+# The Bicep compiler prints out a warning for any experimental features in use. 
+# We want to ignore these warnings since Radius makes use of some experimental features. 
 WARNING_MSG="WARNING: The following experimental Bicep features"
 FILES=$(find . -type f -name "*.bicep")
 FAILURES=()
