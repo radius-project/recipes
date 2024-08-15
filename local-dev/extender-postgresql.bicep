@@ -37,10 +37,10 @@ param memoryRequest string = '512Mi'
 @description('Memory limit for the postgres deployment')
 param memoryLimit string = '1024Mi'
 
-import kubernetes as kubernetes {
+extension kubernetes with {
   kubeConfig: ''
   namespace: context.runtime.kubernetes.namespace
-}
+} as kubernetes
 
 var uniqueName = 'postgres-${uniqueString(context.resource.id)}'
 var port = 5432

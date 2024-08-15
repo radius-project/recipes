@@ -29,10 +29,10 @@ param memoryRequest string = '256Mi'
 @description('Memory limit for the rabbitmq deployment')
 param memoryLimit string = '1024Mi'
 
-import kubernetes as kubernetes {
+extension kubernetes with {
   kubeConfig: ''
   namespace: context.runtime.kubernetes.namespace
-}
+} as kubernetes
 
 var uniqueName = 'rabbitmq-${uniqueString(context.resource.id)}'
 var port = 5672
