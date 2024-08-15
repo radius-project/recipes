@@ -1,4 +1,4 @@
-import radius as radius
+extension radius
 
 @description('Specifies the image for the container resource.')
 param magpieimage string
@@ -9,10 +9,10 @@ param registry string
 @description('The OCI tag for test Bicep recipes.')
 param version string
 
-import kubernetes as kubernetes {
+extension kubernetes with {
   namespace: 'daprrp-rs-secretstore-recipe'
   kubeConfig: ''
-}
+} as kubernetes
 
 resource env 'Applications.Core/environments@2023-10-01-preview' = {
   name: 'local-dev-recipe-env'
