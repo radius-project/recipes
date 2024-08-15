@@ -46,7 +46,7 @@ jobs:
     - name: Download latest rad CLI
       run: |
         echo "Downloading latest rad CLI"
-        wget -q "${{ env.RAD_CLI_URL }}" -O - | /bin/bash
+        wget -q "${{ env.RAD_CLI_URL }}" -O - | /bin/bash -s edge
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
       with:
