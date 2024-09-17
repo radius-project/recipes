@@ -73,6 +73,13 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
           templatePath: '${registry}/recipes/local-dev/statestores:${version}'
         }
       }
+      'Applications.Dapr/configurationStores': {
+        default: {
+          templateKind: 'bicep'
+          plainHttp: true
+          templatePath: '${registry}/recipes/local-dev/configurationstores:${version}'
+        }
+      }
     }
   }
 }
@@ -118,6 +125,9 @@ resource webapp 'Applications.Core/containers@2023-10-01-preview' = {
       }
       daprstatestore: {
         source: statestore.id
+      }
+      daprconfigurationstore: {
+        source: configurationstore.id
       }
     }
     container: {
@@ -205,3 +215,12 @@ resource statestore 'Applications.Dapr/stateStores@2023-10-01-preview' = {
     environment: env.id
   }
 }
+
+resource configurationstore 'Applications.Dapr/configurationStores@2023-10-01-preview' = {
+  name: 'dapr-dcs-recipe'
+  properties: {
+    application: app.id
+    environment: env.id
+  }
+}
+
