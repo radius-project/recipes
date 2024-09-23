@@ -6,6 +6,7 @@ The [local-dev](/local-dev) directory contains lightweight Recipes for developme
 
 | Recipe | Resource | Description | Template Path |
 |--------|----------|-------------|---------------|
+| [`local-dev/daprconfigurationstores`](/local-dev/configurationstores.bicep) | `Applications.Dapr/configurationStores` | A lightweight container running the `redis` image and a Redis Dapr Configuration Store component for development purposes. | `ghcr.io/radius-project/recipes/local-dev/daprconfigurationstores:TAG` |
 | [`local-dev/daprpubsubbrokers`](/local-dev/pubsubbrokers.bicep) | `Applications.Dapr/pubSubBrokers` | A lightweight container running the `redis` image and a Redis Dapr Pub/Sub component for development purposes. | `ghcr.io/radius-project/recipes/local-dev/daprpubsubbrokers:TAG` |
 | [`local-dev/daprstatestores`](/local-dev/statestores.bicep) | `Applications.Dapr/stateStores` |A lightweight container running the `redis` image and a Redis Dapr state store component for development purposes. | `ghcr.io/radius-project/recipes/local-dev/daprstatestores:TAG` |
 | [`local-dev/secretStores`](/local-dev/secretstores.bicep) | `Applications.Dapr/secretStores` | A kubernetes secret store type for development purposes. | `ghcr.io/radius-project/recipes/local-dev/secretstores:TAG` |
