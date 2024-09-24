@@ -108,7 +108,7 @@ After you have tested the recipe in an application, you can follow the steps bel
 1. Make sure there's an issue (bug or feature) raised, which sets the expectations for the contribution you are about to make.
 1. Fork the repository and create a new branch
 1. Add the recipe to the relevant directory following the [repository structure](../../README.md#repository-structure)
-1. Update the [README.md](https://github.com/radius-project/recipes/blob/main/local-dev/README.md) with the new recipe
+1. Update the [README.md] in the relevant directory where the Recipe is added. For eg : [local-dev](https://github.com/radius-project/recipes/blob/main/local-dev/README.md).
 1. Commit and open a PR
 1. Wait for the CI process to finish and make sure all checks are green
 1. A maintainer of the repo will be assigned, and you can expect a review within a few days
