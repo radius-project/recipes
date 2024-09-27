@@ -1,6 +1,6 @@
 # Radius Community Recipes
 
-This repository contains commonly used [Recipe](https://docs.radapp.io/recipes) templates for Radius Environments.
+This repository contains commonly used [Recipe](https://docs.radapp.io/guides/recipes/overview/) templates for Radius Environments.
 
 ## Recipes
 
@@ -51,7 +51,7 @@ rad recipe register azure \
 ### Bicep
 
 ```bicep
-import radius as rad
+extension radius 
 
 resource myenv 'Applications.Core/environments' = {
   name: 'myenv'
