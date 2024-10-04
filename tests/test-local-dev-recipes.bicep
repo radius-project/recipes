@@ -35,7 +35,7 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
         default: {
           templateKind: 'bicep'
           plainHttp: true
-          templatePath: '${registry}/recipes/local-dev/pubsubbrokers:${version}'
+          templatePath: '${registry}/recipes/local-dev/daprpubsubbrokers:${version}'
         }
       }
       'Applications.Messaging/rabbitMQQueues': {
@@ -56,7 +56,7 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
         default: {
           templateKind: 'bicep'
           plainHttp: true
-          templatePath: '${registry}/recipes/local-dev/secretstores:${version}'
+          templatePath: '${registry}/recipes/local-dev/daprsecretstores:${version}'
         }
       }
       'Applications.Datastores/sqlDatabases': {
@@ -70,14 +70,14 @@ resource env 'Applications.Core/environments@2023-10-01-preview' = {
         default: {
           templateKind: 'bicep'
           plainHttp: true
-          templatePath: '${registry}/recipes/local-dev/statestores:${version}'
+          templatePath: '${registry}/recipes/local-dev/daprstatestores:${version}'
         }
       }
       'Applications.Dapr/configurationStores': {
         default: {
           templateKind: 'bicep'
           plainHttp: true
-          templatePath: '${registry}/recipes/local-dev/configurationstores:${version}'
+          templatePath: '${registry}/recipes/local-dev/daprconfigurationstores:${version}'
         }
       }
     }
