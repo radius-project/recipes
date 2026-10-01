@@ -14,6 +14,25 @@ To write your first recipe, follow the steps below:
 
 ### 2. How to test the recipe locally
 
+The root `bicepconfig.json` enables OCI extensions and uses the development `edge`
+tags of `ghcr.io/radius-project/bicep-types-radius` and
+`ghcr.io/radius-project/bicep-types-aws`. Both packages and their referenced tags
+must be publicly readable for anonymous extension restore. These are Bicep
+extension packages, not recipe or container image locations.
+
+Use a compatible released Radius CLI: Radius v0.61.1 downloads Bicep v0.46.1.
+Run `rad bicep download` to install the compiler. With that compiler installed,
+run the repository's compilation check from the repository root:
+
+```bash
+env -u BICEP_PATH BICEP_EXECUTABLE="$HOME/.rad/bin/bicep" \
+  bash .github/scripts/validate-bicep.sh
+```
+
+The development extension tags do not change the existing recipe release tag
+policy. When selecting a versioned extension, retain the intended minor channel,
+full version, prerelease tag, or digest rather than substituting `edge`.
+
 >[!Note]
 >Since we do not have an automated testing framework for recipes and is in our [backlog](https://github.com/radius-project/recipes/issues/62), we recommend testing the recipe locally in your environment before contributing it to the repository. 
 
