@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
+# Managed by radius-project/.github. Change the native source there.
+---
+name: release-backport
+
+on: # zizmor: ignore[dangerous-triggers]
+  pull_request_target:
+    branches:
+      - main
+      - release/*
+    types:
+      - labeled
+      - closed
+  push:
+    branches:
+      - release/*
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Existing release channel in X.Y format
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: release-backport-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  backport:
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+    uses: radius-project/.github/.github/workflows/__release-backport.yml@main
+    with:
+      channel: ${{ inputs.channel || '' }}
+    secrets:
+      RADIUS_RELEASE_BOT_CLIENT_ID: ${{ secrets.RADIUS_RELEASE_BOT_CLIENT_ID }}
+      RADIUS_RELEASE_BOT_PRIVATE_KEY: ${{ secrets.RADIUS_RELEASE_BOT_PRIVATE_KEY }}
