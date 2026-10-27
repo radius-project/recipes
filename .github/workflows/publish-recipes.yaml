@@ -108,6 +108,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      subjects: ${{ steps.subjects.outputs.checksums }}
     steps:
       - name: Check out repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -136,8 +138,48 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Recipes to GHCR
+        env:
+          # Release tags record each published digest for the attestation job.
+          RECIPE_SUBJECTS_FILE: ${{ startsWith(github.ref, 'refs/tags/v') && format('{0}/recipe-subjects.txt', runner.temp) || '' }}
         run: |
           ./.github/scripts/publish-recipes.sh radius-project recipes ${{ env.REL_CHANNEL }}
           if [ "${{ env.REL_TAG }}" != "${{ env.REL_CHANNEL }}" ]; then
             ./.github/scripts/publish-recipes.sh radius-project recipes ${{ env.REL_TAG }}
           fi
+
+      - name: Record published recipe digests
+        id: subjects
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          {
+            echo 'checksums<<EOF'
+            sort -u "${RUNNER_TEMP}/recipe-subjects.txt"
+            echo 'EOF'
+          } >> "${GITHUB_OUTPUT}"
+
+  # Signing runs in its own job, so neither the downloaded CLI nor Bicep can
+  # request the OIDC token used to sign the release provenance.
+  attest-public:
+    name: Attest Recipes - Public
+    needs: publish-public
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      id-token: write # Required to sign the provenance with Sigstore
+      attestations: write # Required to store the provenance attestation
+    steps:
+      - name: Write attestation subjects
+        env:
+          SUBJECTS: ${{ needs.publish-public.outputs.subjects }}
+        run: |
+          if [[ -z "${SUBJECTS}" ]]; then
+            echo "No published recipe digests were recorded." >&2
+            exit 1
+          fi
+          printf '%s\n' "${SUBJECTS}" > "${RUNNER_TEMP}/recipe-subjects.txt"
+
+      - name: Attest published recipe provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-checksums: ${{ runner.temp }}/recipe-subjects.txt

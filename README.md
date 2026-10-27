@@ -34,6 +34,17 @@ ghcr.io/radius-project/recipes/azure/rediscaches:0.21
 
 Patched versions of Recipes are tagged with the patch number, e.g. `0.21.1`. When the tag is created for a patch, the patch and minor tags are updated to point to the new patch version. For example, if `0.21.1` is released, the `0.21` and `0.21.1` tags will be pushed. Consumers of `0.21` will automatically receive the patch update. It is recommended to use the minor tag when consuming Recipes, e.g. `0.21`.
 
+### Provenance
+
+Recipes published from a release tag carry signed SLSA build provenance. Builds from `main` are not attested. To verify a released Recipe, use its full version tag:
+
+```bash
+gh attestation verify oci://ghcr.io/radius-project/recipes/azure/rediscaches:<version> \
+  --repo radius-project/recipes \
+  --signer-workflow radius-project/recipes/.github/workflows/publish-recipes.yaml \
+  --source-ref refs/tags/v<version>
+```
+
 ## Usage
 
 To use a community recipe from this repo, simply use [`rad recipe register`](https://docs.radapp.io/reference/cli/rad_recipe_register) with the Recipe's template path, or update your environment's Bicep definition with the Recipe:

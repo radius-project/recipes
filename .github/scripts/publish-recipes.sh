@@ -40,4 +40,14 @@ do
     echo "Publishing $DIR_NAME/$FILE_NAME to ghcr.io/$GHCR_ORG/$GHCR_PATH from $RECIPE"
     echo "- ghcr.io/$GHCR_ORG/$GHCR_PATH/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION" >> $GITHUB_STEP_SUMMARY
     rad bicep publish --file $RECIPE --target "br:ghcr.io/$GHCR_ORG/$GHCR_PATH/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION"
+
+    # Release builds record each published digest for the provenance attestation.
+    if [[ -n "$RECIPE_SUBJECTS_FILE" ]]; then
+        DIGEST=$(oras resolve "ghcr.io/$GHCR_ORG/$GHCR_PATH/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION")
+        if [[ ! "$DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+            echo "Unexpected digest for $DIR_NAME/$FILE_NAME:$RECIPE_VERSION: $DIGEST"
+            exit 1
+        fi
+        echo "${DIGEST#sha256:}  ghcr.io/$GHCR_ORG/$GHCR_PATH/$DIR_NAME/$FILE_NAME" >> "$RECIPE_SUBJECTS_FILE"
+    fi
 done
