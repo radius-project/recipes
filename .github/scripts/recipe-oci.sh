@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Publish recipe content once per source commit; promote aliases by digest.
+# Verify recipe content against a fresh build; promote aliases by digest.
 set -euo pipefail
 
 readonly STABLE_VERSION='(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)'
@@ -52,7 +52,8 @@ tag_digest() {
 publish() {
     local recipe="$1" repository="$2" source="$3"
     shift 3
-    local digest tag mutable status
+    local digest tag mutable status output
+    local staging="build-$source"
     [[ "$source" =~ ^[0-9a-f]{40}$ ]] || fail "A full source commit SHA is required."
     (($# > 0)) || fail "At least one destination tag is required."
     for tag in "$@"; do
@@ -62,15 +63,26 @@ publish() {
             fail "Stable aliases must be promoted after verification."
     done
 
-    if digest="$(resolve "$repository:$source")"; then
-        echo "Reusing recipe content from $repository:$source" >&2
-    else
+    resolve "$repository:$source" >/dev/null || {
         status=$?
         [[ "$status" == 10 ]] || return "$status"
-        rad bicep publish --file "$recipe" --target "br:$repository:$source" >&2
-        digest="$(resolve "$repository:$source")" ||
-            fail "Published recipe content is unavailable: $repository:$source"
+    }
+
+    # Registry SHA tags are writable. Trust the local publisher's digest,
+    # not an existing source tag or a staging tag that could be substituted.
+    if ! output="$(rad bicep publish --file "$recipe" --target "br:$repository:$staging")"; then
+        printf '%s\n' "$output" >&2
+        fail "Failed to build and publish recipe $recipe."
     fi
+    printf '%s\n' "$output" >&2
+    digest="$(awk -v prefix="Pushed to $repository@" \
+        'index($0, prefix) == 1 { print substr($0, length(prefix) + 1) }' <<<"$output")"
+    [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]] ||
+        fail "Publisher did not report one valid build digest for $repository."
+    [[ "$(resolve "$repository:$staging")" == "$digest" ]] ||
+        fail "Staged recipe digest does not match the local build: $repository:$staging"
+
+    tag_digest "$repository" "$digest" "$source" false
     for tag in "$@"; do
         mutable=false
         [[ "$tag" != edge && "$tag" != pr-* ]] || mutable=true

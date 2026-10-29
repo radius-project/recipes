@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Publish each recipe once per source commit and reuse its digest for version tags.
+# Verify each recipe's build and use its digest for immutable version tags.
 set -euo pipefail
 
 GHCR_ORG="${1:?Expected GHCR organization}"
