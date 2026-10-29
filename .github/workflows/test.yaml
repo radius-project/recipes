@@ -39,7 +39,7 @@ jobs:
           persist-credentials: false
 
       - name: Test version selection and recipe aliases
-        run: python3 .github/scripts/tests/test-recipe-publication.py
+        run: bash .github/scripts/tests/test-recipe-publication.sh
 
   test:
     name: "Recipe tests"

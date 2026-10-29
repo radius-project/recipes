@@ -47,7 +47,7 @@ gh attestation verify oci://ghcr.io/radius-project/recipes/azure/rediscaches:<ve
   --source-ref refs/tags/v<version>
 ```
 
-Run the publication regressions without credentials or a cluster using `python3 .github/scripts/tests/test-recipe-publication.py` on Linux with Bash and jq. The test workflow runs the same suite on pull requests.
+Run the publication regressions without credentials or a cluster using `bash .github/scripts/tests/test-recipe-publication.sh` with Bash and jq. The version parser and the test harness require no Python. The test workflow runs the same suite on pull requests.
 
 ## Usage
 
