@@ -17,6 +17,7 @@ on:
     paths:
       - "local-dev/**"
       - ".github/workflows/**"
+      - .github/scripts/**
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -26,6 +27,20 @@ env:
   APP_NAMESPACE: local-dev-recipe-app
 
 jobs:
+  publication-tests:
+    name: Recipe publication tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Test version selection and recipe aliases
+        run: bash .github/scripts/tests/test-recipe-publication.sh
+
   test:
     name: "Recipe tests"
     runs-on: [ubuntu-latest]

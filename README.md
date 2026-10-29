@@ -24,7 +24,7 @@ All the available Recipes can be found in the folders below:
 
 ## Versioning and Tags
 
-Recipes are versioned using [semantic versioning](https://semver.org/). Each Recipe is tagged with its version number, and the `latest` tag points to the latest version of each Recipe. For example, Radius v0.21 uses the `0.21` tag for each Recipe:
+Recipes are versioned using [semantic versioning](https://semver.org/). Main builds publish `edge`, never `latest`. Release builds publish the full version first; after publication and provenance attestation succeed, the publisher promotes the matching major/minor channel and `latest` by digest. `latest` identifies the newest stable version, not main. RCs and other prereleases do not move stable aliases. For example, Radius v0.21 uses the `0.21` tag for each Recipe:
 
 ```
 ghcr.io/radius-project/recipes/azure/rediscaches:0.21
@@ -32,7 +32,22 @@ ghcr.io/radius-project/recipes/azure/rediscaches:0.21
 
 ### Patching
 
-Patched versions of Recipes are tagged with the patch number, e.g. `0.21.1`. When the tag is created for a patch, the patch and minor tags are updated to point to the new patch version. For example, if `0.21.1` is released, the `0.21` and `0.21.1` tags will be pushed. Consumers of `0.21` will automatically receive the patch update. It is recommended to use the minor tag when consuming Recipes, e.g. `0.21`.
+Patched versions of Recipes are tagged with the patch number, e.g. `0.21.1`. The `0.21` channel advances to that verified digest only when no newer full version exists in the same channel. `latest` advances only when no newer stable full version exists in the repository, so an older-line patch cannot replace it. Retain full-version tags: they are also the rollback-prevention history. If a newer version was staged but publication failed, finish that run rather than promote an older version over it. It is recommended to use the minor tag when consuming Recipes, e.g. `0.21`.
+
+Every publication, including a retry, rebuilds the checked-out recipe into an internal `build-<source-sha>` staging tag. The publisher uses the digest reported by `rad`, checks the staging readback, and reuses source-commit and full-version tags only when they match that build. A conflicting digest fails without overwriting those tags or recording an attestation subject; this also applies when a compiler or dependency change alters the build. Alias promotion uses the verified digest without rebuilding. The workflow serializes publication across main, release tags, and retries. Before switching an existing installation from main-owned `latest`, use `edge` for development; stable consumers may keep `latest`. Updating the workflow does not rewrite existing registry tags, and historical workflow reruns must not be used to restore the old alias behavior.
+
+### Provenance
+
+Recipes published from a release tag carry signed SLSA build provenance. Builds from `main` are not attested. To verify a released Recipe, use its full version tag:
+
+```bash
+gh attestation verify oci://ghcr.io/radius-project/recipes/azure/rediscaches:<version> \
+  --repo radius-project/recipes \
+  --signer-workflow radius-project/recipes/.github/workflows/publish-recipes.yaml \
+  --source-ref refs/tags/v<version>
+```
+
+Run the publication regressions without credentials or a cluster using `bash .github/scripts/tests/test-recipe-publication.sh` with Bash and jq. The version parser and the test harness require no Python. The test workflow runs the same suite on pull requests.
 
 ## Usage
 
