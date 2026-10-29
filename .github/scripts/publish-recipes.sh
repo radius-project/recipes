@@ -1,53 +1,26 @@
-#! /bin/bash
+#!/bin/bash
 
-# Fail immediately if any command fails
-set -e
+# Publish each recipe once per source commit and reuse its digest for version tags.
+set -euo pipefail
 
-# Get command line arguments
-GHCR_ORG=$1
-GHCR_PATH=$2
-RECIPE_VERSION=$3
+GHCR_ORG="${1:?Expected GHCR organization}"
+GHCR_PATH="${2:?Expected recipe repository path}"
+RECIPE_VERSION="${3:?Expected edge, PR, or full release version}"
+SOURCE_SHA="${GITHUB_SHA:?GITHUB_SHA is required}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SUMMARY="${GITHUB_STEP_SUMMARY:-/dev/null}"
 
-# Print usage information
-function print_usage() {
-    echo "Usage: $0 <GHCR_ORG> <RECIPE_VERSION>"
-    echo "  Publishes all recipes in the repository to the GitHub Container Registry. Requires you to be logged into GitHub"
-    echo "  GHCR_ORG: Organization name of the GitHub Container Registry. For example, radius-project"
-    echo "  GHCR_PATH: Path name for Recipe storage. For example, recipes"
-    echo "  RECIPE_VERSION: Version of the recipe to publish. For example, 1.0"
-}
+echo "## Recipes published to ghcr.io/$GHCR_ORG/$GHCR_PATH" >>"$SUMMARY"
+while IFS= read -r -d '' recipe; do
+    file_name="$(basename "$recipe" .bicep)"
+    directory="${recipe#./}"
+    directory="${directory%%/*}"
+    repository="ghcr.io/$GHCR_ORG/$GHCR_PATH/$directory/$file_name"
 
-# Verify that the required arguments are present
-if [ -z "$GHCR_ORG" ] || [ -z "$GHCR_PATH" ] || [ -z "$RECIPE_VERSION" ]; then
-    echo "Missing required arguments"
-    print_usage
-    exit 1
-fi
-
-# We create output that's intended to be consumed by the GitHub Action summary. If we're
-# not running in a GitHub Action, we'll just silence the output.
-if [[ -z "$GITHUB_STEP_SUMMARY" ]]; then
-    GITHUB_STEP_SUMMARY=/dev/null
-fi
-
-echo "## Recipes published to ghcr.io/$GHCR_ORG/$GHCR_PATH" >> $GITHUB_STEP_SUMMARY
-for RECIPE in $(find . -type f -name "*.bicep")
-do
-    # Get the platform (file) name and resource (directory) name
-    export FILE_NAME=$(basename $RECIPE | cut -d. -f1) # rediscaches
-    export DIR_NAME=$(dirname $RECIPE | cut -d/ -f2)   # dev
-
-    echo "Publishing $DIR_NAME/$FILE_NAME to ghcr.io/$GHCR_ORG/$GHCR_PATH from $RECIPE"
-    echo "- ghcr.io/$GHCR_ORG/$GHCR_PATH/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION" >> $GITHUB_STEP_SUMMARY
-    rad bicep publish --file $RECIPE --target "br:ghcr.io/$GHCR_ORG/$GHCR_PATH/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION"
-
-    # Release builds record each published digest for the provenance attestation.
-    if [[ -n "$RECIPE_SUBJECTS_FILE" ]]; then
-        DIGEST=$(oras resolve "ghcr.io/$GHCR_ORG/$GHCR_PATH/$DIR_NAME/$FILE_NAME:$RECIPE_VERSION")
-        if [[ ! "$DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]; then
-            echo "Unexpected digest for $DIR_NAME/$FILE_NAME:$RECIPE_VERSION: $DIGEST"
-            exit 1
-        fi
-        echo "${DIGEST#sha256:}  ghcr.io/$GHCR_ORG/$GHCR_PATH/$DIR_NAME/$FILE_NAME" >> "$RECIPE_SUBJECTS_FILE"
+    digest="$(bash "$SCRIPT_DIR/recipe-oci.sh" publish \
+        "$recipe" "$repository" "$SOURCE_SHA" "$RECIPE_VERSION")"
+    echo "- $repository:$RECIPE_VERSION ($digest)" >>"$SUMMARY"
+    if [[ -n "${RECIPE_SUBJECTS_FILE:-}" ]]; then
+        printf '%s  %s\n' "${digest#sha256:}" "$repository" >>"$RECIPE_SUBJECTS_FILE"
     fi
-done
+done < <(find . -type f -name '*.bicep' -print0)

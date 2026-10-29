@@ -42,10 +42,11 @@ gitRef = os.getenv("GITHUB_REF")
 # From https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 # Group 'version' returns the whole version
 # other named groups return the components
-tagRefRegex = r"^refs/tags/v(?P<version>0|(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$"
+tagRefRegex = r"^refs/tags/v(?P<version>(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?)$"
 pullRefRegex = r"^refs/pull/(.*)/(.*)$"
 
 with open(os.getenv("GITHUB_ENV"), "a") as githubEnv:
+    githubEnv.write("UPDATE_RELEASE=false\n")
     if gitRef is None:
         print("This is not running in github, GITHUB_REF is null. Assuming a local build...")
 
@@ -123,6 +124,8 @@ with open(os.getenv("GITHUB_ENV"), "a") as githubEnv:
             sys.exit(0)
 
     print("This is a normal build")
+    if gitRef != "refs/heads/main":
+        raise ValueError("Expected main, a pull request, or a valid full-version release tag")
     version = "REL_VERSION=edge"
     print("Setting: {}".format(version))
     githubEnv.write(version + "\n")
@@ -131,7 +134,7 @@ with open(os.getenv("GITHUB_ENV"), "a") as githubEnv:
     print("Setting: {}".format(channel))
     githubEnv.write(channel + "\n")
 
-    tag = "REL_TAG=latest"
+    tag = "REL_TAG=edge"
     print("Setting: {}".format(tag))
     githubEnv.write(tag + "\n")
     
